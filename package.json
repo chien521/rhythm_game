@@ -1,0 +1,18 @@
+{
+  "name": "rhythm-game-poc",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:viverse": "tsc && vite build && node scripts/zip-build.js",
+    "generate:audio": "node scripts/generate-track.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "bestzip": "^3.0.1",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0"
+  }
+}

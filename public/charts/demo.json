@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Demo Synth Beat",
+    "bpm": 120,
+    "songLengthMs": 8000
+  },
+  "notes": [
+    { "id": "n1", "time": 1000, "x": 0, "type": "tap" },
+    { "id": "n2", "time": 1500, "x": 5, "type": "tap" },
+    { "id": "n3", "time": 2000, "x": 2, "type": "tap" },
+    { "id": "n4", "time": 2500, "x": 7, "type": "tap" },
+    { "id": "n5", "time": 3000, "x": 1, "type": "tap" },
+    { "id": "n6", "time": 3500, "x": 6, "type": "tap" },
+    { "id": "n7", "time": 4000, "x": 3, "type": "slide" },
+    { "id": "n8", "time": 4300, "x": 4, "type": "slide" },
+    { "id": "n9", "time": 5000, "x": 0, "type": "tap" },
+    { "id": "n10", "time": 5500, "x": 7, "type": "tap" }
+  ]
+}
