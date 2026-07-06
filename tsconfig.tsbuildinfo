@@ -1,1 +1,0 @@
-{"root":["./src/main.ts","./src/config/constants.ts","./src/core/audiomanager.ts","./src/core/chartmanager.ts","./src/core/highscorestore.ts","./src/core/inputmanager.ts","./src/core/scoremanager.ts","./src/core/viewport.ts","./src/render/renderer.ts"],"version":"5.9.3"}

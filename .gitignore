@@ -2,3 +2,4 @@ node_modules/
 dist/
 viverse-prototype.zip
 .DS_Store
+tsconfig.tsbuildinfo
