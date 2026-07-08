@@ -36,6 +36,7 @@ let keyFlashes: KeyFlash[] = [];
 let comboChangedAt = 0; // songTimeMs the combo last incremented, drives the HUD scale-pop
 let shakeThisFrame = false; // set on a Perfect judgment, consumed by the very next frame() call
 let pausedByFocusLoss = false; // true only while showing the "click/press a key to resume" prompt
+let recordedNotes: Array<{ time: number; lane: number; type: "tap" }> = []; // Recording Mode capture buffer
 
 function setState(state: GameState): void {
   currentState = state;
@@ -59,7 +60,8 @@ if (import.meta.env.DEV) {
     scoreManager,
     inputManager,
     getState: () => currentState,
-    getEffectiveSongTime
+    getEffectiveSongTime,
+    getRecordedNotes: () => recordedNotes
   };
 }
 
@@ -143,6 +145,54 @@ function finishGameplay(): void {
   setState("RESULTS");
 }
 
+// Developer hotkey entry point, from TITLE only. restart() both satisfies
+// "start the audio track" and guarantees recording always begins from t=0,
+// even if a previous playthrough left the track mid-song.
+function enterRecordingMode(): void {
+  recordedNotes = [];
+  keyFlashes = [];
+  audioManager.restart();
+  setState("RECORDING");
+}
+
+// Stops on Escape or natural track-end (checked in frame()). Compiles the
+// captured taps into a chart JSON, logs it, triggers a chart.json download,
+// and returns to TITLE.
+function stopRecordingAndExport(): void {
+  const songLengthMs = Math.round(getEffectiveSongTime());
+  audioManager.pause();
+
+  const chart: ChartData = {
+    meta: {
+      title: "Recorded Chart",
+      bpm: chartData?.meta.bpm ?? 120,
+      songLengthMs
+    },
+    notes: recordedNotes.map((note, i) => ({
+      id: `r${i + 1}`,
+      time: note.time,
+      x: note.lane,
+      type: note.type
+    }))
+  };
+
+  const json = JSON.stringify(chart, null, 2);
+  console.log(json);
+
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "chart.json";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+
+  recordedNotes = [];
+  setState("TITLE");
+}
+
 // Auto-pause used by both the window blur handler and the Page Visibility
 // fallback (some mobile/XR browsers signal backgrounding via visibility
 // changes rather than blur). Only ever pauses — resuming is always explicit.
@@ -189,6 +239,24 @@ inputManager.onLaneDown((lane) => {
     const songTimeMs = getEffectiveSongTime();
     keyFlashes.push({ lane, time: songTimeMs }); // flashes on every press, hit or not
     chartManager.registerKeyDown(lane, songTimeMs);
+  } else if (currentState === "RECORDING") {
+    const songTimeMs = getEffectiveSongTime();
+    keyFlashes.push({ lane, time: songTimeMs }); // same capture-confirmation flash as gameplay
+    recordedNotes.push({ time: Math.round(songTimeMs), lane, type: "tap" });
+  }
+});
+
+// Developer hotkeys: 'R' on TITLE starts a recording session, Escape stops one.
+// KeyR happens to also be lane 3's gameplay key (InputManager's own listener
+// still fires for it harmlessly on TITLE, since onLaneDown above has no
+// TITLE branch); this listener is what actually triggers the mode switch.
+window.addEventListener("keydown", (e) => {
+  if (e.code === "KeyR" && currentState === "TITLE") {
+    e.preventDefault();
+    enterRecordingMode();
+  } else if (e.code === "Escape" && currentState === "RECORDING") {
+    e.preventDefault();
+    stopRecordingAndExport();
   }
 });
 
@@ -249,6 +317,17 @@ function frame(): void {
 
     if (chartManager.isComplete(songTimeMs)) {
       finishGameplay();
+    }
+  } else if (currentState === "RECORDING") {
+    const songTimeMs = getEffectiveSongTime();
+    keyFlashes = keyFlashes.filter((f) => songTimeMs - f.time <= KEY_FLASH_DURATION_MS);
+
+    renderer.clear();
+    renderer.drawLanes(inputManager.getHeldLanes(), songTimeMs, keyFlashes);
+    renderer.drawRecordingHud(songTimeMs, audioManager.getDuration(), recordedNotes.length, nowMs);
+
+    if (songTimeMs >= audioManager.getDuration()) {
+      stopRecordingAndExport();
     }
   } else if (currentState === "RESULTS") {
     renderer.clear();

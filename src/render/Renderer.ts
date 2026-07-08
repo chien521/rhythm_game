@@ -426,6 +426,32 @@ export class Renderer {
     this.ctx.restore();
   }
 
+  // HUD for the developer Recording Mode: a pulsing REC dot, elapsed/total
+  // time, captured note count, and the stop hotkey — driven by songTimeMs so
+  // it stays in lockstep with the same clock the captured note timestamps use.
+  drawRecordingHud(songTimeMs: number, durationMs: number, noteCount: number, nowMs: number): void {
+    this.ctx.save();
+    this.ctx.textAlign = "left";
+    this.ctx.textBaseline = "alphabetic";
+
+    const pulse = (Math.sin(nowMs / 200) + 1) / 2; // 0..1, cosmetic-only blink
+    this.ctx.globalAlpha = 0.5 + pulse * 0.5;
+    this.ctx.fillStyle = "#ff4d5e";
+    this.ctx.font = "bold 26px monospace";
+    this.ctx.fillText("● REC", 20, 60);
+
+    this.ctx.globalAlpha = 1;
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.font = "20px monospace";
+    this.ctx.fillText(`${(songTimeMs / 1000).toFixed(1)}s / ${(durationMs / 1000).toFixed(1)}s`, 20, 90);
+    this.ctx.fillText(`${noteCount} notes captured`, 20, 116);
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "16px monospace";
+    this.ctx.fillText("ESC to stop and export chart.json", 20, 144);
+
+    this.ctx.restore();
+  }
+
   drawLoadingScreen(nowMs: number): void {
     this.ctx.save();
     this.ctx.textAlign = "center";

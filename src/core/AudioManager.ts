@@ -76,6 +76,11 @@ export class AudioManager {
     return this.isPlaying;
   }
 
+  // Full track length in ms — used by Recording Mode to detect natural track-end.
+  getDuration(): number {
+    return this.buffer ? this.buffer.duration * 1000 : 0;
+  }
+
   // Derived purely from audioContext.currentTime — never from wall-clock or rAF deltas.
   getSongTime(): number {
     if (!this.context) return 0;

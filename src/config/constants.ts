@@ -66,7 +66,7 @@ export const SCREEN_SHAKE_MAGNITUDE_PX = 3;
 export const BASE_WIDTH = 1920;
 export const BASE_HEIGHT = 1080;
 
-export const GAME_STATES = ["LOADING", "TITLE", "GAMEPLAY", "RESULTS"] as const;
+export const GAME_STATES = ["LOADING", "TITLE", "GAMEPLAY", "RESULTS", "RECORDING"] as const;
 export type GameState = (typeof GAME_STATES)[number];
 
 // Cosmetic cross-fade when switching states. Timed off performance.now(), not
