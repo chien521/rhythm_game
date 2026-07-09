@@ -1,0 +1,459 @@
+{
+  "meta": {
+    "title": "Gymnopedie No. 1 (Waltz)",
+    "bpm": 75,
+    "songLengthMs": 60000
+  },
+  "notes": [
+    {
+      "id": "n1",
+      "time": 0,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n2",
+      "time": 800,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n3",
+      "time": 1600,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n4",
+      "time": 2400,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n5",
+      "time": 3200,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n6",
+      "time": 4000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n7",
+      "time": 4800,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n8",
+      "time": 5600,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n9",
+      "time": 6400,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n10",
+      "time": 7200,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n11",
+      "time": 8000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n12",
+      "time": 8800,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n13",
+      "time": 9600,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n14",
+      "time": 10400,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n15",
+      "time": 11200,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n16",
+      "time": 12000,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n17",
+      "time": 12800,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n18",
+      "time": 13600,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n19",
+      "time": 14400,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n20",
+      "time": 15200,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n21",
+      "time": 16000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n22",
+      "time": 16800,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n23",
+      "time": 17600,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n24",
+      "time": 18400,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n25",
+      "time": 19200,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n26",
+      "time": 20000,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n27",
+      "time": 20800,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n28",
+      "time": 21600,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n29",
+      "time": 22400,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n30",
+      "time": 23200,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n31",
+      "time": 24000,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n32",
+      "time": 24800,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n33",
+      "time": 25600,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n34",
+      "time": 26400,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n35",
+      "time": 27200,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n36",
+      "time": 28000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n37",
+      "time": 28800,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n38",
+      "time": 29600,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n39",
+      "time": 30400,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n40",
+      "time": 31200,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n41",
+      "time": 32000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n42",
+      "time": 32800,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n43",
+      "time": 33600,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n44",
+      "time": 34400,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n45",
+      "time": 35200,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n46",
+      "time": 36000,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n47",
+      "time": 36800,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n48",
+      "time": 37600,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n49",
+      "time": 38400,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n50",
+      "time": 39200,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n51",
+      "time": 40000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n52",
+      "time": 40800,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n53",
+      "time": 41600,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n54",
+      "time": 42400,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n55",
+      "time": 43200,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n56",
+      "time": 44000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n57",
+      "time": 44800,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n58",
+      "time": 45600,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n59",
+      "time": 46400,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n60",
+      "time": 47200,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n61",
+      "time": 48000,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n62",
+      "time": 48800,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n63",
+      "time": 49600,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n64",
+      "time": 50400,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n65",
+      "time": 51200,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n66",
+      "time": 52000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n67",
+      "time": 52800,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n68",
+      "time": 53600,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n69",
+      "time": 54400,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n70",
+      "time": 55200,
+      "x": 7,
+      "type": "slide"
+    },
+    {
+      "id": "n71",
+      "time": 56000,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n72",
+      "time": 56800,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n73",
+      "time": 57600,
+      "x": 0,
+      "type": "slide"
+    },
+    {
+      "id": "n74",
+      "time": 58400,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n75",
+      "time": 59200,
+      "x": 5,
+      "type": "tap"
+    }
+  ]
+}

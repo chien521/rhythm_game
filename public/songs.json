@@ -1,0 +1,32 @@
+[
+  {
+    "id": "gymnopedie",
+    "title": "Gymnopédie No. 1",
+    "artist": "Erik Satie",
+    "bpm": 75,
+    "audioUrl": "/audio/demo.mp3",
+    "charts": {
+      "Normal": "/charts/gymnopedie.json"
+    }
+  },
+  {
+    "id": "waltz_for_debby",
+    "title": "Waltz for Debby",
+    "artist": "Bill Evans Trio",
+    "bpm": 166,
+    "audioUrl": "/audio/debby.mp3",
+    "charts": {
+      "Normal": "/charts/debby.json"
+    }
+  },
+  {
+    "id": "chopin_nocturne",
+    "title": "Nocturne Op. 9 No. 2",
+    "artist": "Frédéric Chopin",
+    "bpm": 120,
+    "audioUrl": "/audio/chopin.wav",
+    "charts": {
+      "Normal": "/charts/chopin.json"
+    }
+  }
+]

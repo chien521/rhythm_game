@@ -1,13 +1,32 @@
+// Directional timing judgment: delta = inputTimeMs - noteTimeMs (signed —
+// negative means the press landed before the note, positive after).
+// |delta| <= perfect -> "perfect"; |delta| <= good -> "good"; beyond that but
+// within earlyLate on either side -> "early"/"late" (still a scored hit, just
+// imprecise and direction-flagged); beyond earlyLate -> out of range, ignored
+// entirely by the active keypress check (see JudgmentEngine.resolveJudgment).
+// A "miss" only ever happens passively, when a note's window times out with
+// no press at all (ChartManager.update()).
 export const JUDGMENT_WINDOWS_MS = {
-  perfect: 50,
-  good: 120
+  perfect: 45,
+  good: 100,
+  earlyLate: 180
 } as const;
 
 // Latency calibration: audio output can reach the player's ears some ms after
 // the Web Audio clock thinks playback started. effectiveSongTimeMs =
 // actualAudioTimeMs - AUDIO_OFFSET_MS. Positive delays the visual/gameplay
 // clock (for late-arriving audio); negative pulls it earlier.
-export const AUDIO_OFFSET_MS = 0;
+export const AUDIO_OFFSET_MS = 1400;
+
+// Player-calibratable input-device latency (ms): the delay between a
+// physical keypress and the browser's keydown event actually firing. Distinct
+// from AUDIO_OFFSET_MS — that shifts the whole gameplay clock (visuals
+// included) to match audio *output* latency, while this only nudges the
+// timestamp used to judge a keypress against a note, never the rendered
+// falling-note position. judgedTimeMs = songTimeMs - INPUT_LATENCY_MS:
+// positive compensates for late-arriving input (judge it as if it happened
+// earlier); negative assumes input arrives early.
+export const INPUT_LATENCY_MS = 0;
 
 export const NOTE_TYPES = ["tap", "slide"] as const;
 export type NoteType = (typeof NOTE_TYPES)[number];
@@ -30,8 +49,20 @@ export interface ChartData {
   notes: ChartNote[];
 }
 
-// How long before its hit time a note spawns and starts falling toward the judgment line.
-export const PRE_RENDER_WINDOW_MS = 800;
+// Song Select manifest (fetched from /songs.json): each entry maps a track's
+// audio asset to one or more selectable difficulty charts, keyed by difficulty
+// name (e.g. "Normal"). audioUrl/chart paths are fetchable URLs, loaded lazily
+// — only once a song is actually chosen in SONG_SELECT, never all up front.
+export interface SongManifestEntry {
+  id: string;
+  title: string;
+  artist: string;
+  bpm: number;
+  audioUrl: string;
+  charts: Record<string, string>;
+}
+
+export type SongManifest = SongManifestEntry[];
 
 // Tap notes stay hittable/rendered until this long after their hit time.
 export const MISSED_WINDOW_MS = JUDGMENT_WINDOWS_MS.good;
@@ -43,10 +74,12 @@ export const SLIDE_WINDOW_MS = 100;
 export const SCORE_VALUES = {
   perfect: 1000,
   good: 500,
+  early: 150, // 30% of GOOD, per spec — still scores, but rewards precision over a rushed/late hit
+  late: 150,
   miss: 0
 } as const;
 
-export const JUDGMENT_TEXT_DURATION_MS = 600;
+export const JUDGMENT_TEXT_DURATION_MS = 500;
 export const JUDGMENT_POP_DURATION_MS = 100; // birth scale-pop, a portion of the full float lifespan above
 
 // Hit-particle burst: position is a pure function of (songTimeMs - spawnTime),
@@ -66,7 +99,7 @@ export const SCREEN_SHAKE_MAGNITUDE_PX = 3;
 export const BASE_WIDTH = 1920;
 export const BASE_HEIGHT = 1080;
 
-export const GAME_STATES = ["LOADING", "TITLE", "GAMEPLAY", "RESULTS", "RECORDING"] as const;
+export const GAME_STATES = ["LOADING", "TITLE", "SONG_SELECT", "GAMEPLAY", "PAUSED", "RESULTS", "RECORDING"] as const;
 export type GameState = (typeof GAME_STATES)[number];
 
 // Cosmetic cross-fade when switching states. Timed off performance.now(), not
@@ -83,10 +116,47 @@ export const RETRY_BUTTON_RECT = {
   height: 90
 } as const;
 
+// Global volume control: shared by SONG_SELECT and the PAUSED overlay, both
+// as the click-to-mute hit-test rect and the drawVolumeBar() layout rect, so
+// the two screens can never drift out of sync with each other.
+export const VOLUME_STEP = 0.05;
+
+// Width of the "VOL" icon segment within VOLUME_BAR_RECT \u2014 shared between
+// drawVolumeBar() (rendering) and main.ts (click-to-mute vs. click/drag-to-
+// set-level hit-testing), so the clickable regions can never drift out of
+// sync with what's actually drawn.
+export const VOLUME_ICON_WIDTH = 46;
+
+export const VOLUME_BAR_RECT = {
+  x: BASE_WIDTH - 340,
+  y: 40,
+  width: 300,
+  height: 40
+} as const;
+
 // Deemo-style vertical fall layout: fixed 8-lane grid, split across two
 // keyboard rows for left/right hand separation.
 export const LANE_COUNT = 8;
 export const JUDGMENT_LINE_Y = 0.85; // fraction of BASE_HEIGHT
+
+// Dynamic scroll scaling: a note's fall speed (px/ms) scales linearly with
+// the loaded chart's BPM, so every song takes the same number of BEATS for a
+// note to fall from the top of the screen to the judgment line, regardless of
+// tempo — slow songs get a slower noteVelocity, fast songs a faster one.
+// computeLookaheadMs derives how far ahead of its hit time (ms) a note must
+// become "active" to already be fully on-screen at that velocity, so slower
+// songs automatically look further ahead and spawn notes earlier. Purely
+// visual/spawn-timing — never touches hit-timing/judgment windows above.
+export const BASE_BPM = 120;
+export const BASE_NOTE_SPEED = 0.5; // px per ms of lead time, at BASE_BPM
+
+export function computeNoteVelocity(bpm: number): number {
+  return BASE_NOTE_SPEED * (bpm / BASE_BPM);
+}
+
+export function computeLookaheadMs(noteVelocity: number): number {
+  return (JUDGMENT_LINE_Y * BASE_HEIGHT) / noteVelocity;
+}
 
 // event.code values (layout-independent), left hand on the top row, right
 // hand on home row — lanes 0-3 occupy the left half of the screen, 4-7 the right.

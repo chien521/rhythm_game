@@ -8,10 +8,15 @@
     "build": "tsc -b && vite build",
     "build:viverse": "tsc && vite build && node scripts/zip-build.js",
     "generate:audio": "node scripts/generate-track.js",
+    "parse:midi": "node parseMidi.js",
+    "render:midi": "node scripts/render-midi-audio.js",
+    "validate:charts": "node scripts/validate-charts.js",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@tonejs/midi": "^2.0.28",
     "bestzip": "^3.0.1",
+    "music-metadata": "^11.13.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.0"
   }

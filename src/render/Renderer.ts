@@ -10,16 +10,45 @@ import {
   LANE_LABELS,
   PARTICLE_FRICTION,
   PARTICLE_LIFESPAN_MS,
-  PRE_RENDER_WINDOW_MS,
-  RETRY_BUTTON_RECT,
   SCREEN_SHAKE_MAGNITUDE_PX,
-  STATE_FADE_DURATION_MS
+  STATE_FADE_DURATION_MS,
+  VOLUME_BAR_RECT,
+  VOLUME_ICON_WIDTH
 } from "../config/constants";
 import { RuntimeNote } from "../core/ChartManager";
 import { Judgment } from "../core/ScoreManager";
 import { computeViewport } from "../core/Viewport";
+import { SongManifestEntry } from "../config/constants";
 
 const clamp = (value: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, value));
+
+export interface UiRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+// Shared layout for SONG_SELECT's row list — called by drawSongSelectScreen
+// AND by main.ts's mouse hit-testing (hover + click), so the two can never
+// disagree about where a row actually is on screen.
+export function getSongSelectRowRect(index: number, total: number): UiRect {
+  const rowHeight = 90;
+  const rowWidth = 840;
+  const listCenterY = BASE_HEIGHT / 2;
+  const startY = listCenterY - ((total - 1) * rowHeight) / 2;
+  const y = startY + index * rowHeight;
+  return { x: BASE_WIDTH / 2 - rowWidth / 2, y: y - rowHeight / 2 + 8, width: rowWidth, height: rowHeight - 16 };
+}
+
+// Shared layout for the PAUSED menu's 2 options — same reasoning as above.
+export function getPauseMenuRowRect(index: number): UiRect {
+  const rowHeight = 80;
+  const rowWidth = 440;
+  const startY = BASE_HEIGHT * 0.55;
+  const y = startY + index * rowHeight;
+  return { x: BASE_WIDTH / 2 - rowWidth / 2, y: y - 30, width: rowWidth, height: 60 };
+}
 
 const LANE_WIDTH = BASE_WIDTH / LANE_COUNT;
 const laneCenterX = (lane: number): number => (lane + 0.5) * LANE_WIDTH;
@@ -28,26 +57,31 @@ const NOTE_COLORS: Record<RuntimeNote["type"], string> = {
   tap: "#39f6ff",
   slide: "#ffd166"
 };
-const MISSED_COLOR = "#5a5f6b";
 const FADE_IN_MS = 250;
 
 const JUDGMENT_COLORS: Record<Judgment, string> = {
-  perfect: "#39f6ff",
-  good: "#ffe066",
+  perfect: "#ffd700", // Radiant Gold
+  good: "#39ff6b", // Bright Green
+  early: "#8fe3ff", // Ice Blue
+  late: "#ff5a36", // Crimson Orange
   miss: "#ff4d5e"
 };
 const JUDGMENT_LABELS: Record<Judgment, string> = {
   perfect: "PERFECT!",
   good: "GOOD",
+  early: "EARLY",
+  late: "LATE",
   miss: "MISS"
 };
 
-// Particle burst colors — a distinct palette from JUDGMENT_COLORS (which
-// drives the floating text), per spec: gold for Perfect, electric cyan for Good.
-type ParticleJudgment = "perfect" | "good";
+// Particle burst colors — mirrors JUDGMENT_COLORS (which drives the floating
+// text) so a hit's particle burst and its text always agree on tier color.
+type ParticleJudgment = "perfect" | "good" | "early" | "late";
 const PARTICLE_COLORS: Record<ParticleJudgment, string> = {
   perfect: "#ffd700",
-  good: "#4dd8ff"
+  good: "#39ff6b",
+  early: "#8fe3ff",
+  late: "#ff5a36"
 };
 
 export interface KeyFlash {
@@ -76,6 +110,8 @@ export interface ResultsSummary {
   maxCombo: number;
   perfectCount: number;
   goodCount: number;
+  earlyCount: number;
+  lateCount: number;
   missCount: number;
   accuracy: number;
   grade: string;
@@ -257,21 +293,28 @@ export class Renderer {
   }
 
   // Falling-note math: y is purely a function of time remaining until the
-  // note's hit time, so it lands exactly on the judgment line at songTimeMs === note.time.
-  drawNotes(activeNotes: readonly RuntimeNote[], songTimeMs: number): void {
+  // note's hit time, scaled by noteVelocity (px/ms, derived per-chart from its
+  // BPM — see computeNoteVelocity) so it lands exactly on the judgment line at
+  // songTimeMs === note.time regardless of tempo. lookaheadMs (how far ahead
+  // of its hit time a note starts fading in) is derived from that same
+  // velocity, so a slower noteVelocity automatically fades notes in earlier,
+  // matching how much further up the screen they need to spawn.
+  drawNotes(activeNotes: readonly RuntimeNote[], songTimeMs: number, noteVelocity: number): void {
     const barHeight = 28;
     const padding = 10;
+    const judgmentLineYPx = JUDGMENT_LINE_Y * BASE_HEIGHT;
+    const lookaheadMs = judgmentLineYPx / noteVelocity;
 
     for (const note of activeNotes) {
+      if (note.status === "missed") continue; // no dim "ghost" bar — a missed note yields no score, so it's gone
+
       const timeRemaining = note.time - songTimeMs;
-      const yFraction =
-        timeRemaining > 0 ? JUDGMENT_LINE_Y - (timeRemaining / PRE_RENDER_WINDOW_MS) * JUDGMENT_LINE_Y : JUDGMENT_LINE_Y;
-      const cy = yFraction * BASE_HEIGHT;
+      const cy = timeRemaining > 0 ? judgmentLineYPx - timeRemaining * noteVelocity : judgmentLineYPx;
       const laneX = note.x * LANE_WIDTH;
 
-      const spawnTime = note.time - PRE_RENDER_WINDOW_MS;
-      const opacity = note.status === "missed" ? 0.35 : clamp((songTimeMs - spawnTime) / FADE_IN_MS, 0, 1);
-      const color = note.status === "missed" ? MISSED_COLOR : NOTE_COLORS[note.type];
+      const spawnTime = note.time - lookaheadMs;
+      const opacity = clamp((songTimeMs - spawnTime) / FADE_IN_MS, 0, 1);
+      const color = NOTE_COLORS[note.type];
 
       this.ctx.save();
       this.ctx.globalAlpha = opacity;
@@ -396,7 +439,109 @@ export class Renderer {
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.font = "20px monospace";
     this.ctx.textAlign = "left";
-    this.ctx.fillText(`t=${songTimeMs.toFixed(1)}ms  ${isPlaying ? "PLAYING" : "PAUSED"} (space to toggle)`, 20, 32);
+    this.ctx.fillText(`t=${songTimeMs.toFixed(1)}ms  ${isPlaying ? "PLAYING" : "PAUSED"} (space to pause)`, 20, 32);
+  }
+
+  // Manual pause menu (Space during GAMEPLAY): a dark scrim over the frozen
+  // scene with a 2-option, keyboard-navigable list (Up/Down + Enter, handled
+  // in main.ts). Distinct from drawResumePrompt, which is the involuntary
+  // auto-pause-on-focus-loss prompt and has no menu at all.
+  drawPauseMenu(selectedIndex: number, nowMs: number, volume: number, isMuted: boolean): void {
+    this.ctx.save();
+    this.ctx.fillStyle = "rgba(5, 6, 10, 0.72)";
+    this.ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.font = "bold 56px monospace";
+    this.ctx.fillText("PAUSED", BASE_WIDTH / 2, BASE_HEIGHT * 0.35);
+
+    const options = ["RESTART", "BACK TO MENU"];
+
+    options.forEach((label, i) => {
+      const rect = getPauseMenuRowRect(i);
+      const y = rect.y + rect.height / 2;
+      const isSelected = i === selectedIndex;
+
+      if (isSelected) {
+        const pulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.15 + pulse * 0.1;
+        this.ctx.fillStyle = "#39f6ff";
+        this.ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.restore();
+
+        this.ctx.strokeStyle = "#39f6ff";
+        this.ctx.lineWidth = 2;
+        this.ctx.shadowColor = "#39f6ff";
+        this.ctx.shadowBlur = 12;
+        this.ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.shadowBlur = 0;
+      }
+
+      this.ctx.fillStyle = isSelected ? "#39f6ff" : "#8fe3ff";
+      this.ctx.font = isSelected ? "bold 30px monospace" : "26px monospace";
+      this.ctx.fillText(label, BASE_WIDTH / 2, y);
+    });
+
+    this.ctx.globalAlpha = 0.8;
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "18px monospace";
+    this.ctx.fillText("\u2191 / \u2193 TO SELECT   ENTER TO CONFIRM   SPACE TO RESUME", BASE_WIDTH / 2, BASE_HEIGHT * 0.8);
+    this.drawVolumeBar(VOLUME_BAR_RECT.x, VOLUME_BAR_RECT.y, VOLUME_BAR_RECT.width, VOLUME_BAR_RECT.height, volume, isMuted);
+
+    this.ctx.restore();
+  }
+
+  // Shared volume control, rendered identically on SONG_SELECT and PAUSED so
+  // the two screens never look or behave differently. "VOL" label doubles as
+  // the speaker icon (a drawn glyph would need its own asset/path data for no
+  // real benefit at this size) with a crossing red X when muted; the level is
+  // 10 segmented rectangles, lit up to round(volume * 10) — muted forces the
+  // fill to read as empty/grayed regardless of the stored volume, matching
+  // AudioManager's own `gain = isMuted ? 0 : volume` behavior.
+  drawVolumeBar(x: number, y: number, width: number, height: number, volume: number, isMuted: boolean): void {
+    this.ctx.save();
+    this.ctx.textAlign = "left";
+    this.ctx.textBaseline = "middle";
+
+    const iconWidth = VOLUME_ICON_WIDTH;
+    const segmentCount = 10;
+    const segmentGap = 4;
+    const barX = x + iconWidth;
+    const barWidth = width - iconWidth;
+    const segmentWidth = (barWidth - segmentGap * (segmentCount - 1)) / segmentCount;
+    const filledCount = isMuted ? 0 : Math.round(volume * segmentCount);
+    const activeColor = "#39f6ff";
+    const dimColor = "rgba(255, 255, 255, 0.15)";
+
+    this.ctx.font = "bold 16px monospace";
+    this.ctx.fillStyle = isMuted ? "rgba(255, 255, 255, 0.35)" : "#8fe3ff";
+    this.ctx.fillText("VOL", x, y + height / 2);
+
+    if (isMuted) {
+      this.ctx.strokeStyle = "#ff4d5e";
+      this.ctx.lineWidth = 2;
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, y + 2);
+      this.ctx.lineTo(x + iconWidth - 10, y + height - 2);
+      this.ctx.moveTo(x + iconWidth - 10, y + 2);
+      this.ctx.lineTo(x, y + height - 2);
+      this.ctx.stroke();
+    }
+
+    for (let i = 0; i < segmentCount; i++) {
+      const segX = barX + i * (segmentWidth + segmentGap);
+      const isFilled = i < filledCount;
+      this.ctx.fillStyle = isFilled ? activeColor : dimColor;
+      this.ctx.shadowColor = activeColor;
+      this.ctx.shadowBlur = isFilled ? 6 : 0;
+      this.ctx.fillRect(segX, y + height * 0.25, segmentWidth, height * 0.5);
+    }
+    this.ctx.shadowBlur = 0;
+    this.ctx.restore();
   }
 
   // Dims the (frozen) gameplay scene behind a prompt after an auto-pause from
@@ -485,56 +630,164 @@ export class Renderer {
     this.ctx.globalAlpha = 0.5 + pulse * 0.5;
     this.ctx.fillStyle = "#39f6ff";
     this.ctx.font = "bold 30px monospace";
-    this.ctx.fillText("TAP TO START", BASE_WIDTH / 2, BASE_HEIGHT * 0.65);
+    this.ctx.fillText("PRESS ENTER OR TAP TO SELECT A SONG", BASE_WIDTH / 2, BASE_HEIGHT * 0.65);
 
     this.ctx.restore();
   }
 
-  drawResultsScreen(summary: ResultsSummary): void {
+  // Song Select: a simple centered vertical list, one row per manifest entry.
+  // The highlighted row gets a translucent fill + glowing outline behind the
+  // text (rather than just recoloring the text) so the current selection
+  // reads clearly even at a glance, plus an Artist/BPM subtext line. While
+  // isLoading is true (the async audio+chart fetch for the pick is in
+  // flight), a flashing full-screen overlay blocks the list from reading as
+  // interactive, so mashing Enter/arrows can't queue up a second load.
+  drawSongSelectScreen(
+    songs: readonly SongManifestEntry[],
+    selectedIndex: number,
+    isLoading: boolean,
+    nowMs: number,
+    volume: number,
+    isMuted: boolean
+  ): void {
     this.ctx.save();
     this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
 
     this.ctx.fillStyle = "#e6faff";
-    this.ctx.font = "bold 64px monospace";
-    this.ctx.fillText("RESULTS", BASE_WIDTH / 2, BASE_HEIGHT * 0.16);
+    this.ctx.font = "bold 48px monospace";
+    this.ctx.fillText("SELECT SONG", BASE_WIDTH / 2, BASE_HEIGHT * 0.15);
 
+    songs.forEach((song, i) => {
+      const rect = getSongSelectRowRect(i, songs.length);
+      const y = rect.y + rect.height / 2;
+      const isSelected = i === selectedIndex;
+      const titleY = isSelected ? y - 14 : y;
+
+      if (isSelected) {
+        this.ctx.save();
+        this.ctx.fillStyle = "rgba(57, 246, 255, 0.15)";
+        this.ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.strokeStyle = "#39f6ff";
+        this.ctx.lineWidth = 2;
+        this.ctx.shadowColor = "#39f6ff";
+        this.ctx.shadowBlur = 12;
+        this.ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.restore();
+      }
+
+      this.ctx.fillStyle = isSelected ? "#39f6ff" : "#8fe3ff";
+      this.ctx.font = isSelected ? "bold 32px monospace" : "26px monospace";
+      this.ctx.fillText(song.title, BASE_WIDTH / 2, titleY);
+
+      if (isSelected) {
+        this.ctx.font = "18px monospace";
+        this.ctx.fillStyle = "#8fe3ff";
+        this.ctx.fillText(`${song.artist} • ${song.bpm} BPM`, BASE_WIDTH / 2, y + 20);
+      }
+    });
+
+    this.ctx.globalAlpha = 0.8;
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "20px monospace";
+    this.ctx.fillText("↑ / ↓ TO BROWSE   ENTER TO START   ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
+    this.ctx.globalAlpha = 1;
+
+    this.drawVolumeBar(VOLUME_BAR_RECT.x, VOLUME_BAR_RECT.y, VOLUME_BAR_RECT.width, VOLUME_BAR_RECT.height, volume, isMuted);
+
+    if (isLoading) {
+      this.ctx.fillStyle = "rgba(5, 6, 10, 0.6)";
+      this.ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+
+      const pulse = (Math.sin(nowMs / 150) + 1) / 2; // fast blink — reads as "busy, don't press anything"
+      this.ctx.globalAlpha = 0.55 + pulse * 0.45;
+      this.ctx.fillStyle = "#ffe066";
+      this.ctx.font = "bold 34px monospace";
+      this.ctx.fillText("LOADING TRACK...", BASE_WIDTH / 2, BASE_HEIGHT / 2);
+      this.ctx.globalAlpha = 1;
+    }
+
+    this.ctx.restore();
+  }
+
+  // Post-game summary. Header communicates pass/fail at a glance (glowing
+  // cyan STAGE CLEAR vs. solid crimson STAGE FAILED, isCleared coming from
+  // whether life remained above 0 at teardown), the grade sits front and
+  // center, and a two-column stats matrix balances judgment counts (left)
+  // against the core score metrics (right) around BASE_WIDTH / 2. The footer
+  // prompt is the only way back to the menu now — keyboard-driven (Enter),
+  // replacing the old click-to-retry rect entirely.
+  drawResultsScreen(summary: ResultsSummary, isCleared: boolean, nowMs: number): void {
+    this.ctx.save();
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "alphabetic";
+
+    // Header zone.
+    if (isCleared) {
+      this.ctx.fillStyle = "#39f6ff";
+      this.ctx.shadowColor = "#39f6ff";
+      this.ctx.shadowBlur = 24;
+      this.ctx.font = "bold 72px monospace";
+      this.ctx.fillText("STAGE CLEAR", BASE_WIDTH / 2, BASE_HEIGHT * 0.16);
+      this.ctx.shadowBlur = 0;
+    } else {
+      this.ctx.fillStyle = "#ff1f3d";
+      this.ctx.font = "bold 72px monospace";
+      this.ctx.fillText("STAGE FAILED", BASE_WIDTH / 2, BASE_HEIGHT * 0.16);
+    }
+
+    // Grade.
     this.ctx.fillStyle = JUDGMENT_COLORS.perfect;
-    this.ctx.font = "bold 140px monospace";
+    this.ctx.font = "bold 120px monospace";
     this.ctx.shadowColor = JUDGMENT_COLORS.perfect;
     this.ctx.shadowBlur = 20;
-    this.ctx.fillText(summary.grade, BASE_WIDTH / 2, BASE_HEIGHT * 0.4);
+    this.ctx.fillText(summary.grade, BASE_WIDTH / 2, BASE_HEIGHT * 0.38);
     this.ctx.shadowBlur = 0;
 
+    // Stats matrix: judgment counts on the left, core metrics on the right,
+    // each column's text anchored an equal distance from center.
+    const colOffset = 120;
+    const leftX = BASE_WIDTH / 2 - colOffset;
+    const rightX = BASE_WIDTH / 2 + colOffset;
+    const rowStartY = BASE_HEIGHT * 0.52;
+    const rowStep = 42;
+
+    this.ctx.textAlign = "right";
+    this.ctx.font = "bold 20px monospace";
     this.ctx.fillStyle = "#e6faff";
-    this.ctx.font = "bold 40px monospace";
-    this.ctx.fillText(`SCORE ${Math.floor(summary.score)}`, BASE_WIDTH / 2, BASE_HEIGHT * 0.5);
-
-    this.ctx.font = "26px monospace";
-    this.ctx.fillStyle = "#8fe3ff";
-    this.ctx.fillText(
-      `MAX COMBO ${summary.maxCombo}   ACCURACY ${summary.accuracy.toFixed(1)}%`,
-      BASE_WIDTH / 2,
-      BASE_HEIGHT * 0.57
-    );
-
-    this.ctx.font = "24px monospace";
+    this.ctx.fillText("JUDGMENTS", leftX, rowStartY - rowStep);
+    this.ctx.font = "22px monospace";
     this.ctx.fillStyle = JUDGMENT_COLORS.perfect;
-    this.ctx.fillText(`PERFECT ${summary.perfectCount}`, BASE_WIDTH / 2 - 260, BASE_HEIGHT * 0.65);
+    this.ctx.fillText(`PERFECT   ${summary.perfectCount}`, leftX, rowStartY);
     this.ctx.fillStyle = JUDGMENT_COLORS.good;
-    this.ctx.fillText(`GOOD ${summary.goodCount}`, BASE_WIDTH / 2, BASE_HEIGHT * 0.65);
+    this.ctx.fillText(`GOOD      ${summary.goodCount}`, leftX, rowStartY + rowStep);
+    this.ctx.fillStyle = JUDGMENT_COLORS.early;
+    this.ctx.fillText(`EARLY     ${summary.earlyCount}`, leftX, rowStartY + rowStep * 2);
+    this.ctx.fillStyle = JUDGMENT_COLORS.late;
+    this.ctx.fillText(`LATE      ${summary.lateCount}`, leftX, rowStartY + rowStep * 3);
     this.ctx.fillStyle = JUDGMENT_COLORS.miss;
-    this.ctx.fillText(`MISS ${summary.missCount}`, BASE_WIDTH / 2 + 260, BASE_HEIGHT * 0.65);
+    this.ctx.fillText(`MISS      ${summary.missCount}`, leftX, rowStartY + rowStep * 4);
 
-    const r = RETRY_BUTTON_RECT;
-    this.ctx.strokeStyle = "#39f6ff";
-    this.ctx.lineWidth = 3;
-    this.ctx.shadowColor = "#39f6ff";
-    this.ctx.shadowBlur = 12;
-    this.ctx.strokeRect(r.x, r.y, r.width, r.height);
-    this.ctx.shadowBlur = 0;
+    this.ctx.textAlign = "left";
+    this.ctx.font = "bold 20px monospace";
     this.ctx.fillStyle = "#e6faff";
-    this.ctx.font = "bold 30px monospace";
-    this.ctx.fillText("RETRY", r.x + r.width / 2, r.y + r.height / 2 + 10);
+    this.ctx.fillText("SUMMARY", rightX, rowStartY - rowStep);
+    this.ctx.font = "22px monospace";
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.fillText(`SCORE     ${Math.floor(summary.score)}`, rightX, rowStartY);
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.fillText(`MAX COMBO ${summary.maxCombo}`, rightX, rowStartY + rowStep);
+    this.ctx.fillText(`ACCURACY  ${summary.accuracy.toFixed(2)}%`, rightX, rowStartY + rowStep * 2);
+
+    // Interactive footer: pulsing prompt, sine wave on nowMs.
+    this.ctx.textAlign = "center";
+    const pulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only
+    this.ctx.globalAlpha = 0.55 + pulse * 0.45;
+    this.ctx.fillStyle = "#39f6ff";
+    this.ctx.shadowColor = "#39f6ff";
+    this.ctx.shadowBlur = 14;
+    this.ctx.font = "bold 26px monospace";
+    this.ctx.fillText("PRESS ENTER TO RETURN TO MAIN MENU", BASE_WIDTH / 2, BASE_HEIGHT * 0.88);
 
     this.ctx.restore();
   }
