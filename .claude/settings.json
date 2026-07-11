@@ -1,0 +1,28 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/session-start-sync.cjs",
+            "timeout": 30,
+            "statusMessage": "Checking origin/main for new commits..."
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .claude/hooks/stop-auto-sync.cjs",
+            "timeout": 120,
+            "statusMessage": "Auto-syncing to GitHub..."
+          }
+        ]
+      }
+    ]
+  }
+}
