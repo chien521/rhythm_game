@@ -2,7 +2,7 @@
   "meta": {
     "title": "Für Elise",
     "bpm": 72,
-    "songLengthMs": 130417
+    "songLengthMs": 129792
   },
   "notes": [
     {
@@ -97,1051 +97,1051 @@
     },
     {
       "id": "n16",
-      "time": 10417,
-      "x": 2,
+      "time": 10625,
+      "x": 1,
       "type": "tap"
     },
     {
       "id": "n17",
       "time": 11250,
-      "x": 5,
+      "x": 4,
       "type": "tap"
     },
     {
       "id": "n18",
-      "time": 11667,
-      "x": 2,
+      "time": 11875,
+      "x": 0,
       "type": "tap"
     },
     {
       "id": "n19",
       "time": 12500,
-      "x": 5,
+      "x": 4,
       "type": "tap"
     },
     {
       "id": "n20",
-      "time": 12917,
-      "x": 2,
+      "time": 13125,
+      "x": 1,
       "type": "tap"
     },
     {
       "id": "n21",
       "time": 13750,
-      "x": 5,
+      "x": 4,
       "type": "tap"
     },
     {
       "id": "n22",
-      "time": 14167,
-      "x": 2,
+      "time": 14375,
+      "x": 0,
       "type": "tap"
     },
     {
       "id": "n23",
       "time": 15000,
-      "x": 5,
+      "x": 4,
       "type": "tap"
     },
     {
       "id": "n24",
-      "time": 15417,
-      "x": 2,
+      "time": 15625,
+      "x": 3,
       "type": "tap"
     },
     {
       "id": "n25",
-      "time": 16458,
+      "time": 16667,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n26",
-      "time": 16875,
+      "time": 17083,
       "x": 3,
       "type": "tap"
     },
     {
       "id": "n27",
-      "time": 18125,
+      "time": 17917,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n28",
-      "time": 19375,
+      "time": 19167,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n29",
-      "time": 20000,
+      "time": 19375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n30",
-      "time": 20625,
-      "x": 4,
+      "time": 20417,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n31",
-      "time": 21250,
+      "time": 20625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n32",
-      "time": 21875,
-      "x": 4,
+      "time": 21667,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n33",
-      "time": 22500,
+      "time": 21875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n34",
-      "time": 23125,
-      "x": 4,
+      "time": 22917,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n35",
-      "time": 24375,
+      "time": 24167,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n36",
-      "time": 25000,
+      "time": 24375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n37",
-      "time": 25625,
-      "x": 4,
+      "time": 25417,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n38",
-      "time": 26250,
+      "time": 25625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n39",
-      "time": 26875,
-      "x": 4,
+      "time": 26667,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n40",
-      "time": 27500,
+      "time": 26875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n41",
-      "time": 28125,
+      "time": 27917,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n42",
-      "time": 28750,
+      "time": 28125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n43",
-      "time": 29375,
+      "time": 29167,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n44",
-      "time": 30000,
+      "time": 29375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n45",
-      "time": 30833,
+      "time": 30521,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n46",
-      "time": 31250,
+      "time": 30625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n47",
-      "time": 32083,
+      "time": 31771,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n48",
-      "time": 32500,
+      "time": 31875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n49",
-      "time": 33333,
-      "x": 5,
+      "time": 33125,
+      "x": 1,
       "type": "tap"
     },
     {
       "id": "n50",
-      "time": 33750,
-      "x": 1,
+      "time": 33125,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n51",
-      "time": 34687,
-      "x": 4,
+      "time": 34375,
+      "x": 1,
       "type": "tap"
     },
     {
       "id": "n52",
-      "time": 35000,
-      "x": 1,
+      "time": 34375,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n53",
-      "time": 36042,
-      "x": 5,
-      "type": "tap"
-    },
-    {
-      "id": "n54",
-      "time": 36250,
+      "time": 35625,
       "x": 1,
       "type": "tap"
     },
     {
-      "id": "n55",
-      "time": 37292,
+      "id": "n54",
+      "time": 35625,
       "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n55",
+      "time": 36875,
+      "x": 2,
       "type": "tap"
     },
     {
       "id": "n56",
-      "time": 37500,
-      "x": 2,
+      "time": 36875,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n57",
-      "time": 38646,
-      "x": 5,
+      "time": 38125,
+      "x": 2,
       "type": "tap"
     },
     {
       "id": "n58",
-      "time": 38750,
-      "x": 2,
+      "time": 38125,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n59",
-      "time": 39896,
-      "x": 6,
+      "time": 39375,
+      "x": 2,
       "type": "tap"
     },
     {
       "id": "n60",
-      "time": 40000,
-      "x": 2,
+      "time": 39375,
+      "x": 5,
       "type": "tap"
     },
     {
       "id": "n61",
-      "time": 41146,
-      "x": 5,
+      "time": 40625,
+      "x": 2,
       "type": "tap"
     },
     {
       "id": "n62",
-      "time": 41250,
-      "x": 2,
-      "type": "tap"
-    },
-    {
-      "id": "n63",
-      "time": 42396,
-      "x": 6,
-      "type": "tap"
-    },
-    {
-      "id": "n64",
-      "time": 42500,
-      "x": 2,
-      "type": "tap"
-    },
-    {
-      "id": "n65",
-      "time": 43646,
+      "time": 40625,
       "x": 5,
       "type": "tap"
     },
     {
-      "id": "n66",
-      "time": 43750,
+      "id": "n63",
+      "time": 41875,
       "x": 2,
       "type": "tap"
     },
     {
+      "id": "n64",
+      "time": 41875,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n65",
+      "time": 43125,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n66",
+      "time": 43125,
+      "x": 5,
+      "type": "tap"
+    },
+    {
       "id": "n67",
-      "time": 44896,
+      "time": 44375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n68",
-      "time": 46250,
+      "time": 45625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n69",
-      "time": 47500,
+      "time": 46875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n70",
-      "time": 48750,
+      "time": 48125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n71",
-      "time": 50000,
+      "time": 49375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n72",
-      "time": 50000,
+      "time": 49375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n73",
-      "time": 51250,
+      "time": 50625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n74",
-      "time": 51250,
+      "time": 50625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n75",
-      "time": 52500,
+      "time": 51875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n76",
-      "time": 52500,
+      "time": 51875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n77",
-      "time": 53750,
+      "time": 53125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n78",
-      "time": 55000,
+      "time": 54375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n79",
-      "time": 55000,
+      "time": 54375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n80",
-      "time": 56250,
+      "time": 55625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n81",
-      "time": 56250,
+      "time": 55625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n82",
-      "time": 57500,
+      "time": 56875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n83",
-      "time": 57500,
+      "time": 56875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n84",
-      "time": 58750,
+      "time": 58125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n85",
-      "time": 58750,
+      "time": 58125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n86",
-      "time": 60000,
+      "time": 59375,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n87",
-      "time": 60000,
+      "time": 59375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n88",
-      "time": 61250,
+      "time": 60625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n89",
-      "time": 61250,
+      "time": 60625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n90",
-      "time": 62500,
+      "time": 61875,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n91",
-      "time": 62500,
+      "time": 61875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n92",
-      "time": 63750,
+      "time": 63125,
       "x": 3,
       "type": "tap"
     },
     {
       "id": "n93",
-      "time": 63958,
+      "time": 63333,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n94",
-      "time": 65208,
+      "time": 64583,
       "x": 3,
       "type": "tap"
     },
     {
       "id": "n95",
-      "time": 65625,
+      "time": 65000,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n96",
-      "time": 66875,
+      "time": 66250,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n97",
-      "time": 67500,
+      "time": 66875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n98",
-      "time": 68125,
+      "time": 67500,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n99",
-      "time": 68750,
+      "time": 68125,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n100",
-      "time": 69375,
+      "time": 68750,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n101",
-      "time": 70000,
+      "time": 69375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n102",
-      "time": 70625,
+      "time": 70000,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n103",
-      "time": 71875,
+      "time": 71250,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n104",
-      "time": 72500,
+      "time": 71875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n105",
-      "time": 73125,
+      "time": 72500,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n106",
-      "time": 73750,
+      "time": 73125,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n107",
-      "time": 74375,
+      "time": 73750,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n108",
-      "time": 75000,
+      "time": 74375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n109",
-      "time": 76250,
+      "time": 75625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n110",
-      "time": 76250,
+      "time": 75625,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n111",
-      "time": 77500,
+      "time": 76875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n112",
-      "time": 77500,
+      "time": 76875,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n113",
-      "time": 78750,
+      "time": 78125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n114",
-      "time": 78750,
+      "time": 78125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n115",
-      "time": 80000,
+      "time": 79375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n116",
-      "time": 80000,
+      "time": 79375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n117",
-      "time": 81250,
+      "time": 80625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n118",
-      "time": 81250,
+      "time": 80625,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n119",
-      "time": 82500,
+      "time": 81875,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n120",
-      "time": 82500,
+      "time": 81875,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n121",
-      "time": 83750,
+      "time": 83125,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n122",
-      "time": 83750,
+      "time": 83125,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n123",
-      "time": 85000,
+      "time": 84375,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n124",
-      "time": 85000,
+      "time": 84375,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n125",
-      "time": 86250,
+      "time": 85625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n126",
-      "time": 86250,
+      "time": 85625,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n127",
-      "time": 87500,
+      "time": 86875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n128",
-      "time": 87500,
+      "time": 86875,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n129",
-      "time": 88750,
+      "time": 88125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n130",
-      "time": 88750,
+      "time": 88125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n131",
-      "time": 90000,
+      "time": 89375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n132",
-      "time": 90000,
+      "time": 89375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n133",
-      "time": 91250,
+      "time": 90625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n134",
-      "time": 91250,
+      "time": 90625,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n135",
-      "time": 92500,
+      "time": 91875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n136",
-      "time": 92500,
+      "time": 91875,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n137",
-      "time": 93750,
+      "time": 93125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n138",
-      "time": 93750,
+      "time": 93125,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n139",
-      "time": 95000,
+      "time": 94375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n140",
-      "time": 95000,
+      "time": 94375,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n141",
-      "time": 96250,
+      "time": 95625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n142",
-      "time": 96250,
+      "time": 95625,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n143",
-      "time": 97500,
+      "time": 96875,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n144",
-      "time": 97500,
+      "time": 96875,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n145",
-      "time": 98750,
+      "time": 98125,
       "x": 2,
       "type": "tap"
     },
     {
       "id": "n146",
-      "time": 98750,
+      "time": 98125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n147",
-      "time": 100000,
+      "time": 99375,
       "x": 2,
       "type": "tap"
     },
     {
       "id": "n148",
-      "time": 100000,
+      "time": 99375,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n149",
-      "time": 101250,
+      "time": 100625,
       "x": 2,
       "type": "tap"
     },
     {
       "id": "n150",
-      "time": 101250,
+      "time": 100625,
       "x": 7,
       "type": "tap"
     },
     {
       "id": "n151",
-      "time": 102500,
+      "time": 101875,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n152",
-      "time": 103750,
+      "time": 103125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n153",
-      "time": 105000,
+      "time": 104375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n154",
-      "time": 105000,
+      "time": 104375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n155",
-      "time": 106250,
+      "time": 105625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n156",
-      "time": 106250,
+      "time": 105625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n157",
-      "time": 107500,
+      "time": 106875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n158",
-      "time": 107500,
+      "time": 106875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n159",
-      "time": 108750,
+      "time": 108125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n160",
-      "time": 110000,
+      "time": 109375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n161",
-      "time": 110000,
+      "time": 109375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n162",
-      "time": 111250,
+      "time": 110625,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n163",
-      "time": 111250,
+      "time": 110625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n164",
-      "time": 112500,
+      "time": 111875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n165",
-      "time": 112500,
+      "time": 111875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n166",
-      "time": 113750,
+      "time": 113125,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n167",
-      "time": 113750,
+      "time": 113125,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n168",
-      "time": 115000,
+      "time": 114375,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n169",
-      "time": 115000,
+      "time": 114375,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n170",
-      "time": 116250,
+      "time": 115625,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n171",
-      "time": 116250,
+      "time": 115625,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n172",
-      "time": 117500,
+      "time": 116875,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n173",
-      "time": 117500,
+      "time": 116875,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n174",
-      "time": 118750,
+      "time": 118125,
       "x": 3,
       "type": "tap"
     },
     {
       "id": "n175",
-      "time": 118958,
+      "time": 118333,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n176",
-      "time": 120208,
+      "time": 119583,
       "x": 3,
       "type": "tap"
     },
     {
       "id": "n177",
-      "time": 120625,
+      "time": 120000,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n178",
-      "time": 121875,
+      "time": 121250,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n179",
-      "time": 122500,
+      "time": 121875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n180",
-      "time": 123125,
+      "time": 122500,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n181",
-      "time": 123750,
+      "time": 123125,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n182",
-      "time": 124375,
+      "time": 123750,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n183",
-      "time": 125000,
+      "time": 124375,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n184",
-      "time": 125625,
+      "time": 125000,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n185",
-      "time": 126875,
+      "time": 126250,
       "x": 5,
       "type": "tap"
     },
     {
       "id": "n186",
-      "time": 127500,
+      "time": 126875,
       "x": 1,
       "type": "tap"
     },
     {
       "id": "n187",
-      "time": 128125,
+      "time": 127500,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n188",
-      "time": 128750,
+      "time": 128125,
       "x": 0,
       "type": "tap"
     },
     {
       "id": "n189",
-      "time": 129375,
+      "time": 128750,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n190",
-      "time": 130000,
+      "time": 129375,
       "x": 0,
       "type": "tap"
     }
