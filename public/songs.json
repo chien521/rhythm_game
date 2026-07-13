@@ -6,6 +6,7 @@
     "bpm": 60,
     "scoreUrl": "/scores/gymnopedie.json",
     "charts": {
+      "Easy": "/charts/gymnopedie_easy.json",
       "Normal": "/charts/gymnopedie.json"
     }
   },
@@ -16,6 +17,7 @@
     "bpm": 66,
     "scoreUrl": "/scores/chopin_nocturne.json",
     "charts": {
+      "Easy": "/charts/chopin_nocturne_easy.json",
       "Normal": "/charts/chopin_nocturne.json"
     }
   }
