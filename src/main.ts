@@ -151,9 +151,10 @@ function beginGameplay(): void {
   setState("GAMEPLAY");
 }
 
-// Loads the currently-highlighted manifest entry's audio + first difficulty
+// Loads the currently-highlighted manifest entry's score + first difficulty
 // chart, then hands off to beginGameplay(). Guarded by loadingSelectedSong so
-// holding/mashing Enter can't fire overlapping loads.
+// holding/mashing Enter can't fire overlapping loads. (The first score load
+// also fetches/decodes the shared piano samples — cached for every song after.)
 async function startSelectedSong(): Promise<void> {
   if (loadingSelectedSong) return;
   const song = songManifest[selectedSongIndex];
@@ -162,7 +163,7 @@ async function startSelectedSong(): Promise<void> {
 
   loadingSelectedSong = true;
   try {
-    const [chart] = await Promise.all([loadChart(chartPath), audioManager.loadAudioFile(song.audioUrl)]);
+    const [chart] = await Promise.all([loadChart(chartPath), audioManager.loadScore(song.scoreUrl)]);
     chartData = chart;
     beginGameplay();
   } catch (err) {
@@ -196,12 +197,12 @@ function returnToTitleFromResults(): void {
   setState("TITLE");
 }
 
-// Developer hotkey entry point. Scoped to SONG_SELECT (not TITLE, which no
-// longer has any audio preloaded since the Song Select refactor — TITLE would
-// crash on audioManager.restart() with no buffer loaded). Loads the currently-
-// highlighted song's REAL audio first via loadAudioFile(), so recording always
-// happens against the exact file that song's chart needs to end up synced to.
-// Guarded by loadingSelectedSong so mashing 'R' can't fire overlapping loads.
+// Developer hotkey entry point. Scoped to SONG_SELECT (not TITLE, which has
+// nothing preloaded — TITLE would crash on audioManager.restart() with no
+// score loaded). Loads the currently-highlighted song's REAL score first via
+// loadScore(), so recording always happens against the exact performance that
+// song's chart needs to end up synced to. Guarded by loadingSelectedSong so
+// mashing 'R' can't fire overlapping loads.
 async function enterRecordingMode(): Promise<void> {
   if (loadingSelectedSong) return;
   const song = songManifest[selectedSongIndex];
@@ -209,14 +210,14 @@ async function enterRecordingMode(): Promise<void> {
 
   loadingSelectedSong = true;
   try {
-    await audioManager.loadAudioFile(song.audioUrl);
+    await audioManager.loadScore(song.scoreUrl);
     recordingSongId = song.id;
     recordedNotes = [];
     keyFlashes = [];
     audioManager.restart(); // first call here also resumes the AudioContext — inside this gesture handler
     setState("RECORDING");
   } catch (err) {
-    console.error(`Failed to load audio for recording "${song.id}":`, err);
+    console.error(`Failed to load score for recording "${song.id}":`, err);
   } finally {
     loadingSelectedSong = false;
   }
@@ -230,10 +231,11 @@ function stopRecordingAndExport(): void {
   const songLengthMs = Math.round(getEffectiveSongTime());
   audioManager.pause();
 
+  const recordedSong = songManifest.find((s) => s.id === recordingSongId);
   const chart: ChartData = {
     meta: {
-      title: recordingSongId ?? "Recorded Chart",
-      bpm: chartData?.meta.bpm ?? 120,
+      title: recordedSong?.title ?? recordingSongId ?? "Recorded Chart",
+      bpm: recordedSong?.bpm ?? 120,
       songLengthMs
     },
     notes: recordedNotes.map((note, i) => ({

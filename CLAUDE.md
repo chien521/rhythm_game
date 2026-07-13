@@ -11,41 +11,62 @@ the Web Audio API's `AudioContext.currentTime` — never `<audio>` element
 polling and never `requestAnimationFrame` deltas. Any change touching note
 scheduling, playback, or chart timing must preserve this.
 
+## Single-source-of-truth content pipeline
+
+There are **no audio files**. The game itself performs each song: a sampled
+piano synth (`src/core/PianoSynth.ts`, Salamander samples in
+`public/samples/piano/`) schedules every note of a **score JSON** at exact
+`AudioContext` timestamps. The playable **chart JSON** is a thinned subset of
+that same score's onsets. Both derive from one sheet file, so audio/chart
+drift is impossible by construction — never reintroduce a separately-authored
+audio file or a bpm-formula-generated placeholder chart (the original root
+cause of this project's sync bugs).
+
+```
+sheets/<song>.musicxml|.mid
+  │  npm run parse:sheet -- sheets/<file> <id> "<Title>"
+  ▼
+public/scores/<id>.json        full performance (what the piano plays)
+  │  npm run generate:chart -- <id> [--target=2-4] [--report-only]
+  ▼
+public/charts/<id>.json        playable chart (what the player hits)
+```
+
+Then add/point the entry in `public/songs.json` (`scoreUrl` + `charts`).
+
+- `parse-sheet.js` reads MusicXML (primary; real `<staff>` hand data) or MIDI
+  (fallback; hand from track names/avg pitch, or a warned median-pitch split
+  for single-track files). Repeats/voltas and grace notes are skipped WITH A
+  WARNING — never silently.
+- `generate-chart.js` thins density in tunable stages (velocity filter →
+  per-hand cluster-merge → optional quantize → per-hand min-gap /
+  `--target` auto-tune). Thinning only ever REMOVES notes; every chart note
+  keeps its exact score onset. `--quantize` breaks that guarantee (stamps
+  `meta.quantized`) and is off by default — avoid it.
+- Sheet sources live in `sheets/` and are committed — they ARE the source of
+  truth. Both current songs came from the Mutopia Project (public domain).
+
 ## Lane / hand mapping convention
 
 - Lanes 0-3 = left hand (`Q W E R`) = piano LEFT hand parts
 - Lanes 4-7 = right hand (`J K L ;`) = piano RIGHT hand parts
 
-This is intentional, not incidental. When generating charts from MIDI, route
-notes by hand/voice where the source data allows it, not just by proportional
-pitch range — a low note played by the right hand should still land in lanes
-4-7.
+This is intentional, not incidental. Hand data comes from the score
+(`hand: "L" | "R"` per note); within a hand, pitch position picks the lane
+inside the 4-lane block. Cluster-merge and min-gap run PER HAND on purpose:
+a simultaneous L+R hit is a deliberate two-hand chord, not noise to collapse.
 
-## Chart data philosophy
+## Chart validation
 
-A chart is not "done" until it's validated against real audio duration:
+A chart is not "done" until `npm run validate:charts` passes. It checks every
+manifest song's chart against its score: length agreement, **every chart note
+time is an exact score onset** (i.e. everything you're asked to hit is a note
+the piano actually plays), lanes 0-7, sorted times, unique ids. Non-zero exit
+on failure — the Stop hook uses it as the auto-push gate.
 
-```
-npm run validate:charts
-```
-
-Charts must **never** be pure bpm-formula-generated placeholders (evenly
-spaced note timestamps). That was the original root cause of audio/chart
-sync issues in this project and is easy to reintroduce accidentally by
-"simplifying" a chart generator.
-
-Real charts come from one of:
-- (a) parsing an actual MIDI file's note timing via `parseMidi.js` or
-  `generate-hand-chart.js`
-- (b) Recording Mode — tapping along to real audio, with timestamps captured
-  live
-
-Target chart density is **~2-4 notes/sec** for Normal difficulty. Raw
-flattened MIDI note-on events are not 1:1 with playable "beats" — they need
-thinning (velocity filtering, min-gap enforcement, optional beat
-quantization) or the chart will feel busier than the music actually sounds.
-See the flag documentation at the top of `parseMidi.js` for the tunable
-pipeline stages.
+Target chart density is **~2-4 notes/sec** for Normal difficulty, but respect
+the music: Gymnopédie No. 1 is genuinely sparse (~1.1 notes/sec) and forcing
+it denser would be wrong. Use `--report-only` to A/B settings.
 
 ## Verification standing instruction
 
@@ -60,22 +81,26 @@ suspicion until confirmed with real numbers.
 
 | File | Purpose |
 |---|---|
-| `parseMidi.js` | MIDI -> chart JSON, basic version, tunable density pipeline |
-| `generate-hand-chart.js` | MIDI -> chart JSON with RH/LH voice separation (current best approach) |
-| `scripts/render-midi-audio.js` | MIDI -> WAV synth render, guarantees audio/chart timeline agreement |
-| `scripts/validate-charts.js` | Checks every song's chart `songLengthMs` against real audio file duration |
+| `scripts/parse-sheet.js` | MusicXML/MIDI sheet -> score JSON (with hands) |
+| `scripts/generate-chart.js` | score JSON -> chart JSON, staged density thinning |
+| `scripts/validate-charts.js` | chart-vs-score integrity gate (length, exact onsets, structure) |
+| `src/core/PianoSynth.ts` | sampled-piano playback scheduled on the audio clock |
+| `src/core/AudioManager.ts` | the game clock (`getSongTime()`) + score playback control |
+| `sheets/` | committed sheet sources (the single source of truth per song) |
 
-## Known open issues
+## Known open issues / notes
 
-- Two-hand chart generation is a heuristic (velocity-based hand split), not
-  literal sheet transcription — currently being tested for feel, not
-  confirmed final.
-- `gymnopedie` and `waltz_for_debby` still need real charts via Recording
-  Mode. Check `npm run validate:charts` for current PASS/FAIL — as of the
-  last check both FAIL (chart length far short of actual audio length).
-- `chopin.mp3` (the original real recording) is unused/orphaned on disk —
-  the project currently uses `chopin.wav` (synth-rendered from `chopin.mid`)
-  instead, for guaranteed zero drift.
+- `AUDIO_OFFSET_MS` was reset to 0 when playback moved to PianoSynth (the old
+  1400 was calibrated for the removed decoded-WAV path). Recalibrate by feel
+  if hits consistently judge early/late on a given device.
+- Sustain-pedal resonance is not modeled — notes decay naturally until their
+  written end plus a release ramp. Acceptable v1; polish item.
+- MusicXML support is v1: score-partwise only, no repeats/voltas expansion,
+  no grace notes, no `.mxl` (export uncompressed `.musicxml`). All limits
+  warn loudly when hit.
+- `sheets/chopin_performance.mid` is the old single-track performance MIDI
+  (unused; the active source is `sheets/chopin_nocturne_op9_n2.mid`, which
+  has real upper/lower staff tracks).
 
 ## Multi-machine workflow and Git automation
 
@@ -111,13 +136,6 @@ commit or push — it leaves the working tree exactly as-is and prints a
 notice that auto-sync was skipped because the build is currently broken.
 This is deliberate: a mid-work broken state should never silently become
 what's waiting on the other machine.
-
-Note: because `validate:charts` currently fails for `gymnopedie` and
-`waltz_for_debby` (see Known open issues above), the Stop hook will keep
-skipping auto-push for *any* change — even unrelated ones — until those two
-charts are fixed or excluded. That's the gate working as intended, not a
-bug; if it's ever too aggressive, narrow the gate to only run
-`validate:charts` for songs actually touched in the diff.
 
 Both scripts hard-check that `origin` points at
 `github.com/chien521/rhythm_game` before doing anything, so this automation

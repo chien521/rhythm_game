@@ -1,458 +1,944 @@
 {
   "meta": {
-    "title": "Gymnopedie No. 1 (Waltz)",
-    "bpm": 75,
-    "songLengthMs": 60000
+    "title": "Gymnopédie No. 1",
+    "bpm": 60,
+    "songLengthMs": 141000
   },
   "notes": [
     {
       "id": "n1",
       "time": 0,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n2",
-      "time": 800,
       "x": 1,
       "type": "tap"
     },
     {
-      "id": "n3",
-      "time": 1600,
-      "x": 5,
-      "type": "tap"
-    },
-    {
-      "id": "n4",
-      "time": 2400,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n5",
-      "time": 3200,
-      "x": 2,
-      "type": "tap"
-    },
-    {
-      "id": "n6",
-      "time": 4000,
-      "x": 6,
-      "type": "tap"
-    },
-    {
-      "id": "n7",
-      "time": 4800,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n8",
-      "time": 5600,
-      "x": 3,
-      "type": "tap"
-    },
-    {
-      "id": "n9",
-      "time": 6400,
+      "id": "n2",
+      "time": 1000,
       "x": 4,
       "type": "tap"
     },
     {
-      "id": "n10",
-      "time": 7200,
-      "x": 7,
-      "type": "slide"
+      "id": "n3",
+      "time": 3000,
+      "x": 0,
+      "type": "tap"
     },
     {
-      "id": "n11",
-      "time": 8000,
+      "id": "n4",
+      "time": 4000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n5",
+      "time": 6000,
       "x": 1,
       "type": "tap"
     },
     {
+      "id": "n6",
+      "time": 7000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n7",
+      "time": 9000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n8",
+      "time": 10000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n9",
+      "time": 12000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n10",
+      "time": 13000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n11",
+      "time": 14000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
       "id": "n12",
-      "time": 8800,
-      "x": 5,
+      "time": 15000,
+      "x": 0,
       "type": "tap"
     },
     {
       "id": "n13",
-      "time": 9600,
-      "x": 0,
-      "type": "slide"
+      "time": 15000,
+      "x": 7,
+      "type": "tap"
     },
     {
       "id": "n14",
-      "time": 10400,
-      "x": 2,
+      "time": 16000,
+      "x": 4,
       "type": "tap"
     },
     {
       "id": "n15",
-      "time": 11200,
+      "time": 17000,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n16",
-      "time": 12000,
-      "x": 7,
-      "type": "slide"
+      "time": 18000,
+      "x": 1,
+      "type": "tap"
     },
     {
       "id": "n17",
-      "time": 12800,
-      "x": 3,
+      "time": 18000,
+      "x": 6,
       "type": "tap"
     },
     {
       "id": "n18",
-      "time": 13600,
+      "time": 19000,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n19",
-      "time": 14400,
-      "x": 0,
-      "type": "slide"
+      "time": 20000,
+      "x": 6,
+      "type": "tap"
     },
     {
       "id": "n20",
-      "time": 15200,
-      "x": 1,
+      "time": 21000,
+      "x": 0,
       "type": "tap"
     },
     {
       "id": "n21",
-      "time": 16000,
-      "x": 5,
+      "time": 21000,
+      "x": 6,
       "type": "tap"
     },
     {
       "id": "n22",
-      "time": 16800,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n23",
-      "time": 17600,
-      "x": 2,
-      "type": "tap"
-    },
-    {
-      "id": "n24",
-      "time": 18400,
-      "x": 6,
-      "type": "tap"
-    },
-    {
-      "id": "n25",
-      "time": 19200,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n26",
-      "time": 20000,
-      "x": 3,
-      "type": "tap"
-    },
-    {
-      "id": "n27",
-      "time": 20800,
+      "time": 22000,
       "x": 4,
       "type": "tap"
     },
     {
-      "id": "n28",
-      "time": 21600,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n29",
-      "time": 22400,
+      "id": "n23",
+      "time": 24000,
       "x": 1,
       "type": "tap"
     },
     {
-      "id": "n30",
-      "time": 23200,
+      "id": "n24",
+      "time": 24000,
       "x": 5,
       "type": "tap"
     },
     {
-      "id": "n31",
-      "time": 24000,
+      "id": "n25",
+      "time": 25000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n26",
+      "time": 27000,
       "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n32",
-      "time": 24800,
-      "x": 2,
       "type": "tap"
     },
     {
-      "id": "n33",
-      "time": 25600,
-      "x": 6,
-      "type": "tap"
-    },
-    {
-      "id": "n34",
-      "time": 26400,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n35",
-      "time": 27200,
-      "x": 3,
-      "type": "tap"
-    },
-    {
-      "id": "n36",
+      "id": "n27",
       "time": 28000,
       "x": 4,
       "type": "tap"
     },
     {
-      "id": "n37",
-      "time": 28800,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n38",
-      "time": 29600,
+      "id": "n28",
+      "time": 30000,
       "x": 1,
       "type": "tap"
     },
     {
+      "id": "n29",
+      "time": 31000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n30",
+      "time": 33000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n31",
+      "time": 34000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n32",
+      "time": 36000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n33",
+      "time": 37000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n34",
+      "time": 38000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n35",
+      "time": 39000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n36",
+      "time": 39000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n37",
+      "time": 40000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n38",
+      "time": 41000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
       "id": "n39",
-      "time": 30400,
-      "x": 5,
+      "time": 42000,
+      "x": 1,
       "type": "tap"
     },
     {
       "id": "n40",
-      "time": 31200,
-      "x": 7,
-      "type": "slide"
+      "time": 42000,
+      "x": 6,
+      "type": "tap"
     },
     {
       "id": "n41",
-      "time": 32000,
-      "x": 2,
+      "time": 43000,
+      "x": 6,
       "type": "tap"
     },
     {
       "id": "n42",
-      "time": 32800,
+      "time": 44000,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n43",
-      "time": 33600,
+      "time": 45000,
       "x": 0,
-      "type": "slide"
+      "type": "tap"
     },
     {
       "id": "n44",
-      "time": 34400,
-      "x": 3,
+      "time": 45000,
+      "x": 6,
       "type": "tap"
     },
     {
       "id": "n45",
-      "time": 35200,
+      "time": 46000,
       "x": 4,
       "type": "tap"
     },
     {
       "id": "n46",
-      "time": 36000,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n47",
-      "time": 36800,
+      "time": 48000,
       "x": 1,
       "type": "tap"
     },
     {
-      "id": "n48",
-      "time": 37600,
-      "x": 5,
-      "type": "tap"
-    },
-    {
-      "id": "n49",
-      "time": 38400,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n50",
-      "time": 39200,
-      "x": 2,
-      "type": "tap"
-    },
-    {
-      "id": "n51",
-      "time": 40000,
+      "id": "n47",
+      "time": 48000,
       "x": 6,
       "type": "tap"
     },
     {
-      "id": "n52",
-      "time": 40800,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n53",
-      "time": 41600,
-      "x": 3,
-      "type": "tap"
-    },
-    {
-      "id": "n54",
-      "time": 42400,
+      "id": "n48",
+      "time": 49000,
       "x": 4,
       "type": "tap"
     },
     {
-      "id": "n55",
-      "time": 43200,
+      "id": "n49",
+      "time": 51000,
       "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n56",
-      "time": 44000,
-      "x": 1,
       "type": "tap"
     },
     {
-      "id": "n57",
-      "time": 44800,
+      "id": "n50",
+      "time": 51000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n51",
+      "time": 52000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n52",
+      "time": 54000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n53",
+      "time": 54000,
       "x": 5,
       "type": "tap"
     },
     {
-      "id": "n58",
-      "time": 45600,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n59",
-      "time": 46400,
+      "id": "n54",
+      "time": 55000,
       "x": 2,
       "type": "tap"
     },
     {
+      "id": "n55",
+      "time": 57000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n56",
+      "time": 58000,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n57",
+      "time": 60000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n58",
+      "time": 61000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n59",
+      "time": 63000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
       "id": "n60",
-      "time": 47200,
+      "time": 63000,
       "x": 6,
       "type": "tap"
     },
     {
       "id": "n61",
-      "time": 48000,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n62",
-      "time": 48800,
-      "x": 3,
-      "type": "tap"
-    },
-    {
-      "id": "n63",
-      "time": 49600,
-      "x": 4,
-      "type": "tap"
-    },
-    {
-      "id": "n64",
-      "time": 50400,
-      "x": 7,
-      "type": "slide"
-    },
-    {
-      "id": "n65",
-      "time": 51200,
-      "x": 1,
-      "type": "tap"
-    },
-    {
-      "id": "n66",
-      "time": 52000,
-      "x": 5,
-      "type": "tap"
-    },
-    {
-      "id": "n67",
-      "time": 52800,
-      "x": 0,
-      "type": "slide"
-    },
-    {
-      "id": "n68",
-      "time": 53600,
+      "time": 64000,
       "x": 2,
       "type": "tap"
     },
     {
-      "id": "n69",
-      "time": 54400,
+      "id": "n62",
+      "time": 64000,
       "x": 6,
       "type": "tap"
     },
     {
-      "id": "n70",
-      "time": 55200,
+      "id": "n63",
+      "time": 65000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n64",
+      "time": 66000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n65",
+      "time": 66000,
       "x": 7,
-      "type": "slide"
+      "type": "tap"
+    },
+    {
+      "id": "n66",
+      "time": 67000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n67",
+      "time": 67000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n68",
+      "time": 68000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n69",
+      "time": 69000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n70",
+      "time": 69000,
+      "x": 6,
+      "type": "tap"
     },
     {
       "id": "n71",
-      "time": 56000,
-      "x": 3,
+      "time": 70000,
+      "x": 2,
       "type": "tap"
     },
     {
       "id": "n72",
-      "time": 56800,
-      "x": 4,
+      "time": 70000,
+      "x": 6,
       "type": "tap"
     },
     {
       "id": "n73",
-      "time": 57600,
-      "x": 0,
-      "type": "slide"
+      "time": 71000,
+      "x": 6,
+      "type": "tap"
     },
     {
       "id": "n74",
-      "time": 58400,
-      "x": 1,
+      "time": 72000,
+      "x": 0,
       "type": "tap"
     },
     {
       "id": "n75",
-      "time": 59200,
+      "time": 72000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n76",
+      "time": 73000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n77",
+      "time": 75000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n78",
+      "time": 76000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n79",
+      "time": 77000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n80",
+      "time": 78000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n81",
+      "time": 78000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n82",
+      "time": 79000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n83",
+      "time": 79000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n84",
+      "time": 80000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n85",
+      "time": 81000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n86",
+      "time": 81000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n87",
+      "time": 82000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n88",
+      "time": 82000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n89",
+      "time": 83000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n90",
+      "time": 84000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n91",
+      "time": 84000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n92",
+      "time": 85000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n93",
+      "time": 85000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n94",
+      "time": 86000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n95",
+      "time": 87000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n96",
+      "time": 87000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n97",
+      "time": 88000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n98",
+      "time": 90000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n99",
+      "time": 91000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n100",
+      "time": 92000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n101",
+      "time": 93000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n102",
+      "time": 93000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n103",
+      "time": 94000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n104",
+      "time": 96000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n105",
+      "time": 96000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n106",
+      "time": 97000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n107",
+      "time": 99000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n108",
+      "time": 99000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n109",
+      "time": 100000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n110",
+      "time": 101000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n111",
+      "time": 102000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n112",
+      "time": 102000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n113",
+      "time": 103000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n114",
+      "time": 104000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n115",
+      "time": 105000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n116",
+      "time": 105000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n117",
+      "time": 106000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n118",
+      "time": 107000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n119",
+      "time": 108000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n120",
+      "time": 108000,
       "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n121",
+      "time": 109000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n122",
+      "time": 109000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n123",
+      "time": 110000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n124",
+      "time": 110000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n125",
+      "time": 111000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n126",
+      "time": 111000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n127",
+      "time": 114000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n128",
+      "time": 114000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n129",
+      "time": 117000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n130",
+      "time": 117000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n131",
+      "time": 118000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n132",
+      "time": 120000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n133",
+      "time": 120000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n134",
+      "time": 121000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n135",
+      "time": 123000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n136",
+      "time": 123000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n137",
+      "time": 124000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n138",
+      "time": 125000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n139",
+      "time": 126000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n140",
+      "time": 126000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n141",
+      "time": 127000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n142",
+      "time": 128000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n143",
+      "time": 129000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n144",
+      "time": 129000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n145",
+      "time": 130000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n146",
+      "time": 131000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n147",
+      "time": 132000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n148",
+      "time": 132000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n149",
+      "time": 133000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n150",
+      "time": 133000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n151",
+      "time": 134000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n152",
+      "time": 134000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n153",
+      "time": 135000,
+      "x": 1,
+      "type": "tap"
+    },
+    {
+      "id": "n154",
+      "time": 135000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n155",
+      "time": 138000,
+      "x": 0,
+      "type": "tap"
+    },
+    {
+      "id": "n156",
+      "time": 138000,
+      "x": 4,
       "type": "tap"
     }
   ]

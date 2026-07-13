@@ -31,7 +31,15 @@ Other useful scripts:
 |---|---|
 | `npm run build` | Type-check + production build only (no zip) |
 | `npm run preview` | Preview the production build locally |
-| `npm run generate:audio` | Regenerate the placeholder synthesized track at `public/audio/track.wav` |
+| `npm run parse:sheet -- <sheet> <id> "<Title>"` | Convert a MusicXML/MIDI piano sheet into a score JSON (`public/scores/`) |
+| `npm run generate:chart -- <id> [flags]` | Thin a score into a playable chart (`public/charts/`) |
+| `npm run validate:charts` | Verify every chart against its score (length + exact note onsets) |
+
+There are no audio files: the game itself performs each song with a sampled
+piano (`public/samples/piano/`, Salamander Grand — CC-BY), scheduling the
+score's notes on the same `AudioContext` clock gameplay is judged against.
+Score and chart both derive from one committed sheet file in `sheets/`, so
+the music you hear and the notes you hit can never drift apart.
 
 ## Gameplay Ergonomics
 
@@ -66,7 +74,7 @@ Recording Mode lets you map a new chart by tapping along to the current track in
    - Logs the complete chart JSON to the browser console.
    - Automatically downloads it as **`chart.json`** to your downloads folder.
 
-The exported file follows the same schema as `public/charts/demo.json`:
+The exported file follows the same schema as the generated charts in `public/charts/`:
 
 ```json
 {

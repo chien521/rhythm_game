@@ -1,0 +1,4 @@
+Salamander Grand Piano V3 samples (velocity layer subset, minor-third spacing)
+by Alexander Holm — Creative Commons Attribution 3.0 (CC-BY)
+https://archive.org/details/SalamanderGrandPianoV3
+Downloaded from the Tone.js mirror: https://tonejs.github.io/audio/salamander/
