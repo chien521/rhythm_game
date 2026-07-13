@@ -1,4 +1,6 @@
 import {
+  AUDIO_OFFSET_MAX_MS,
+  AUDIO_OFFSET_MIN_MS,
   BASE_HEIGHT,
   BASE_WIDTH,
   COMBO_POP_DURATION_MS,
@@ -878,6 +880,77 @@ export class Renderer {
       this.ctx.fillText("LOADING TRACK...", BASE_WIDTH / 2, BASE_HEIGHT / 2);
       this.ctx.globalAlpha = 1;
     }
+
+    this.ctx.restore();
+  }
+
+  // Settings screen (opened from SONG_SELECT via KeyS, Escape returns there):
+  // currently just the live-adjustable AUDIO_OFFSET_MS override. Matches
+  // drawSongSelectScreen's visual language (centered header, monospace,
+  // cyan palette) and reuses drawProgressBar/drawVolumeBar's plain
+  // track-plus-fill slider style rather than introducing a new one.
+  drawSettingsScreen(audioOffsetMs: number, nowMs: number): void {
+    this.ctx.save();
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.font = "bold 48px monospace";
+    this.ctx.fillText("SETTINGS", BASE_WIDTH / 2, BASE_HEIGHT * 0.15);
+
+    const rowY = BASE_HEIGHT * 0.42;
+    const sign = audioOffsetMs > 0 ? "+" : "";
+    const valueText = `${sign}${audioOffsetMs} ms`;
+
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "bold 24px monospace";
+    this.ctx.fillText("AUDIO OFFSET", BASE_WIDTH / 2, rowY - 40);
+
+    this.ctx.fillStyle = "#39f6ff";
+    this.ctx.font = "bold 32px monospace";
+    const pulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only, same formula used elsewhere
+    this.ctx.shadowColor = "#39f6ff";
+    this.ctx.shadowBlur = 8 + pulse * 6;
+    this.ctx.fillText(valueText, BASE_WIDTH / 2, rowY);
+    this.ctx.shadowBlur = 0;
+
+    // Slider: a plain track-plus-fill bar (same style as drawProgressBar/
+    // drawVolumeBar), center = 0, filled from center toward the handle so
+    // negative/positive offsets read as "left of center"/"right of center."
+    const sliderWidth = 480;
+    const sliderHeight = 14;
+    const sliderX = BASE_WIDTH / 2 - sliderWidth / 2;
+    const sliderY = rowY + 30;
+    const range = AUDIO_OFFSET_MAX_MS - AUDIO_OFFSET_MIN_MS;
+    const fraction = (audioOffsetMs - AUDIO_OFFSET_MIN_MS) / range; // 0..1 across the full range
+    const centerX = sliderX + sliderWidth / 2;
+    const handleX = sliderX + sliderWidth * fraction;
+
+    this.ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+    this.ctx.fillRect(sliderX, sliderY, sliderWidth, sliderHeight);
+
+    this.ctx.fillStyle = "#39f6ff";
+    this.ctx.shadowColor = "#39f6ff";
+    this.ctx.shadowBlur = 6;
+    this.ctx.fillRect(Math.min(centerX, handleX), sliderY, Math.abs(handleX - centerX), sliderHeight);
+    this.ctx.shadowBlur = 0;
+
+    // Handle: a small bright tick at the current value's position on the track.
+    const handleWidth = 6;
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.fillRect(handleX - handleWidth / 2, sliderY - 6, handleWidth, sliderHeight + 12);
+
+    this.ctx.globalAlpha = 0.8;
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "16px monospace";
+    this.ctx.fillText("POSITIVE = NOTES ARRIVE LATER (FOR DELAYED AUDIO)", BASE_WIDTH / 2, sliderY + 50);
+    this.ctx.globalAlpha = 1;
+
+    this.ctx.globalAlpha = 0.8;
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "20px monospace";
+    this.ctx.fillText("← / → ADJUST     ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
+    this.ctx.globalAlpha = 1;
 
     this.ctx.restore();
   }

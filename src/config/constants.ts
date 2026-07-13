@@ -129,6 +129,7 @@ export const GAME_STATES = [
   "LOADING",
   "TITLE",
   "SONG_SELECT",
+  "SETTINGS",
   "DIFFICULTY_SELECT",
   "GAMEPLAY",
   "PAUSED",
@@ -144,6 +145,12 @@ export const DIFFICULTY_ORDER = ["Easy", "Normal"] as const;
 // Cosmetic cross-fade when switching states. Timed off performance.now(), not
 // songTimeMs, since TITLE has no audio clock yet and RESULTS has none running.
 export const STATE_FADE_DURATION_MS = 400;
+
+// SETTINGS screen's adjustable range/step for the live AUDIO_OFFSET_MS
+// override persisted via SettingsStore.
+export const AUDIO_OFFSET_MIN_MS = -500;
+export const AUDIO_OFFSET_MAX_MS = 500;
+export const AUDIO_OFFSET_STEP_MS = 5;
 
 export const GRADE_THRESHOLDS = { S: 95, A: 90, B: 80 } as const;
 export type Grade = "S" | "A" | "B" | "C";

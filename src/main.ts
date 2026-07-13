@@ -3,6 +3,7 @@ import { ChartManager } from "./core/ChartManager";
 import { InputManager } from "./core/InputManager";
 import { ScoreManager } from "./core/ScoreManager";
 import { BestScoreEntry, getAllBestScores, getBestScore, getBestScoreKey, updateBestScore } from "./core/ScoreStore";
+import { getAudioOffsetMs, setAudioOffsetMs } from "./core/SettingsStore";
 import {
   HitParticle,
   JudgmentDisplay,
@@ -15,7 +16,9 @@ import {
 } from "./render/Renderer";
 import { computeViewport } from "./core/Viewport";
 import {
-  AUDIO_OFFSET_MS,
+  AUDIO_OFFSET_MAX_MS,
+  AUDIO_OFFSET_MIN_MS,
+  AUDIO_OFFSET_STEP_MS,
   BASE_HEIGHT,
   BASE_WIDTH,
   ChartData,
@@ -64,6 +67,7 @@ let resultsIsNewBest = false; // whether this run's finishGameplay() call just s
 let loadingSelectedSong = false; // guards against a repeated Enter re-firing the async load
 let pauseMenuIndex = 0; // 0 = Restart, 1 = Back to Menu — currently highlighted row in the PAUSED overlay, driven by keyboard AND mouse hover alike
 let isDraggingVolume = false; // true while the mouse button is held down on the volume level bar
+let audioOffsetMs = getAudioOffsetMs(); // read from localStorage once at startup, not every frame — live-adjustable in SETTINGS
 
 function setState(state: GameState): void {
   currentState = state;
@@ -75,7 +79,7 @@ function setState(state: GameState): void {
 // logic and rendering reads this, never audioManager.getSongTime() directly,
 // so a single constant tunes sync without touching hit-detection or draw code.
 function getEffectiveSongTime(): number {
-  return audioManager.getSongTime() - AUDIO_OFFSET_MS;
+  return audioManager.getSongTime() - audioOffsetMs;
 }
 
 // Dev-only hook for driving/inspecting exact songTimeMs and state from test harnesses.
@@ -594,6 +598,33 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "KeyR") {
     e.preventDefault();
     void enterRecordingMode(); // records against whichever song is currently highlighted
+  } else if (e.code === "KeyS") {
+    e.preventDefault();
+    setState("SETTINGS");
+  }
+});
+
+// SETTINGS: live-adjustable AUDIO_OFFSET_MS override, opened from SONG_SELECT
+// (KeyS above) and always returning there on Escape. Same
+// currentState/transitionStartMs debounce guard as every other screen's own
+// listener — without it, the very same Escape keypress that leaves SETTINGS
+// would instantly bleed through into whatever screen's listener runs next on
+// that same keydown event, since currentState has already flipped by then.
+window.addEventListener("keydown", (e) => {
+  if (currentState !== "SETTINGS") return;
+  if (performance.now() - transitionStartMs < STATE_FADE_DURATION_MS) return;
+
+  if (e.code === "ArrowLeft") {
+    e.preventDefault();
+    audioOffsetMs = Math.min(AUDIO_OFFSET_MAX_MS, Math.max(AUDIO_OFFSET_MIN_MS, audioOffsetMs - AUDIO_OFFSET_STEP_MS));
+    setAudioOffsetMs(audioOffsetMs);
+  } else if (e.code === "ArrowRight") {
+    e.preventDefault();
+    audioOffsetMs = Math.min(AUDIO_OFFSET_MAX_MS, Math.max(AUDIO_OFFSET_MIN_MS, audioOffsetMs + AUDIO_OFFSET_STEP_MS));
+    setAudioOffsetMs(audioOffsetMs);
+  } else if (e.code === "Escape") {
+    e.preventDefault();
+    setState("SONG_SELECT");
   }
 });
 
@@ -724,6 +755,9 @@ function frame(): void {
       audioManager.volume,
       audioManager.isMuted
     );
+  } else if (currentState === "SETTINGS") {
+    renderer.clear();
+    renderer.drawSettingsScreen(audioOffsetMs, nowMs);
   } else if (currentState === "DIFFICULTY_SELECT") {
     renderer.clear();
     const song = songManifest[selectedSongIndex];
