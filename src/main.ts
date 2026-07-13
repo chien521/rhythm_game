@@ -601,6 +601,7 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "KeyS") {
     e.preventDefault();
     setState("SETTINGS");
+    audioManager.startMetronome();
   }
 });
 
@@ -624,6 +625,7 @@ window.addEventListener("keydown", (e) => {
     setAudioOffsetMs(audioOffsetMs);
   } else if (e.code === "Escape") {
     e.preventDefault();
+    audioManager.stopMetronome();
     setState("SONG_SELECT");
   }
 });
@@ -757,7 +759,8 @@ function frame(): void {
     );
   } else if (currentState === "SETTINGS") {
     renderer.clear();
-    renderer.drawSettingsScreen(audioOffsetMs, nowMs);
+    const pulse = audioManager.getMetronomePulse(audioOffsetMs);
+    renderer.drawSettingsScreen(audioOffsetMs, nowMs, pulse);
   } else if (currentState === "DIFFICULTY_SELECT") {
     renderer.clear();
     const song = songManifest[selectedSongIndex];

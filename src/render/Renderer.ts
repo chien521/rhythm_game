@@ -885,11 +885,15 @@ export class Renderer {
   }
 
   // Settings screen (opened from SONG_SELECT via KeyS, Escape returns there):
-  // currently just the live-adjustable AUDIO_OFFSET_MS override. Matches
-  // drawSongSelectScreen's visual language (centered header, monospace,
-  // cyan palette) and reuses drawProgressBar/drawVolumeBar's plain
-  // track-plus-fill slider style rather than introducing a new one.
-  drawSettingsScreen(audioOffsetMs: number, nowMs: number): void {
+  // currently just the live-adjustable AUDIO_OFFSET_MS override, plus a
+  // metronome calibration aid. Matches drawSongSelectScreen's visual language
+  // (centered header, monospace, cyan palette) and reuses
+  // drawProgressBar/drawVolumeBar's plain track-plus-fill slider style rather
+  // than introducing a new one. `pulse` (0..1, from
+  // AudioManager.getMetronomePulse — the SAME AudioContext clock the audible
+  // tick is scheduled on) drives a flashing beat indicator: the player nudges
+  // the offset until the flash they SEE lines up with the click they HEAR.
+  drawSettingsScreen(audioOffsetMs: number, nowMs: number, pulse: number): void {
     this.ctx.save();
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
@@ -897,6 +901,21 @@ export class Renderer {
     this.ctx.fillStyle = "#e6faff";
     this.ctx.font = "bold 48px monospace";
     this.ctx.fillText("SETTINGS", BASE_WIDTH / 2, BASE_HEIGHT * 0.15);
+
+    // Beat indicator: a filled circle whose alpha/glow track `pulse` directly
+    // (bright flash at pulse=1, dark/idle at pulse=0) — sits above the offset
+    // controls so it reads as the calibration focal point.
+    const beatY = BASE_HEIGHT * 0.26;
+    const beatRadius = 40;
+    this.ctx.beginPath();
+    this.ctx.arc(BASE_WIDTH / 2, beatY, beatRadius, 0, Math.PI * 2);
+    this.ctx.fillStyle = "#ffd700";
+    this.ctx.globalAlpha = 0.15 + pulse * 0.85;
+    this.ctx.shadowColor = "#ffd700";
+    this.ctx.shadowBlur = pulse * 30;
+    this.ctx.fill();
+    this.ctx.shadowBlur = 0;
+    this.ctx.globalAlpha = 1;
 
     const rowY = BASE_HEIGHT * 0.42;
     const sign = audioOffsetMs > 0 ? "+" : "";
@@ -908,9 +927,9 @@ export class Renderer {
 
     this.ctx.fillStyle = "#39f6ff";
     this.ctx.font = "bold 32px monospace";
-    const pulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only, same formula used elsewhere
+    const idlePulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only, same formula used elsewhere
     this.ctx.shadowColor = "#39f6ff";
-    this.ctx.shadowBlur = 8 + pulse * 6;
+    this.ctx.shadowBlur = 8 + idlePulse * 6;
     this.ctx.fillText(valueText, BASE_WIDTH / 2, rowY);
     this.ctx.shadowBlur = 0;
 
@@ -943,7 +962,9 @@ export class Renderer {
     this.ctx.globalAlpha = 0.8;
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.font = "16px monospace";
-    this.ctx.fillText("POSITIVE = NOTES ARRIVE LATER (FOR DELAYED AUDIO)", BASE_WIDTH / 2, sliderY + 50);
+    this.ctx.fillText("A TICK PLAYS ON THE BEAT — ADJUST UNTIL THE FLASH MATCHES THE SOUND YOU HEAR", BASE_WIDTH / 2, sliderY + 50);
+    this.ctx.font = "14px monospace";
+    this.ctx.fillText("POSITIVE = NOTES ARRIVE LATER (FOR DELAYED AUDIO)", BASE_WIDTH / 2, sliderY + 74);
     this.ctx.globalAlpha = 1;
 
     this.ctx.globalAlpha = 0.8;
