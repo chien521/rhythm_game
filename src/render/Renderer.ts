@@ -136,6 +136,8 @@ export interface ResultsSummary {
   missCount: number;
   accuracy: number;
   grade: string;
+  isFullCombo: boolean;
+  isAllPerfect: boolean;
 }
 
 // Pure presentation layer. Receives a song-time (ms) each frame from the
@@ -921,6 +923,34 @@ export class Renderer {
     this.ctx.shadowBlur = 20;
     this.ctx.fillText(summary.grade, BASE_WIDTH / 2, BASE_HEIGHT * 0.38);
     this.ctx.shadowBlur = 0;
+
+    // Achievement badge: ALL PERFECT (every hit was a Perfect — strictly
+    // stronger) takes priority over FULL COMBO (no misses at all), gold vs.
+    // cyan making the tiers visually distinct at a glance. Sits between the
+    // grade above and the stats matrix's "JUDGMENTS"/"SUMMARY" header row
+    // below, independent of and positioned well clear of the NEW BEST banner
+    // further down, so both can show at once without overlapping.
+    if (summary.isAllPerfect) {
+      const badgePulse = (Math.sin(nowMs / 300) + 1) / 2;
+      this.ctx.globalAlpha = 0.55 + badgePulse * 0.45;
+      this.ctx.fillStyle = "#ffd700";
+      this.ctx.shadowColor = "#ffd700";
+      this.ctx.shadowBlur = 16;
+      this.ctx.font = "bold 30px monospace";
+      this.ctx.fillText("ALL PERFECT", BASE_WIDTH / 2, BASE_HEIGHT * 0.44);
+      this.ctx.shadowBlur = 0;
+      this.ctx.globalAlpha = 1;
+    } else if (summary.isFullCombo) {
+      const badgePulse = (Math.sin(nowMs / 300) + 1) / 2;
+      this.ctx.globalAlpha = 0.55 + badgePulse * 0.45;
+      this.ctx.fillStyle = "#39f6ff";
+      this.ctx.shadowColor = "#39f6ff";
+      this.ctx.shadowBlur = 16;
+      this.ctx.font = "bold 30px monospace";
+      this.ctx.fillText("FULL COMBO", BASE_WIDTH / 2, BASE_HEIGHT * 0.44);
+      this.ctx.shadowBlur = 0;
+      this.ctx.globalAlpha = 1;
+    }
 
     // Stats matrix: judgment counts on the left, core metrics on the right,
     // each column's text anchored an equal distance from center.

@@ -808,7 +808,9 @@ function frame(): void {
         lateCount: scoreManager.lateCount,
         missCount: scoreManager.missCount,
         accuracy: scoreManager.getAccuracy(),
-        grade: scoreManager.getGrade()
+        grade: scoreManager.getGrade(),
+        isFullCombo: scoreManager.isFullCombo(),
+        isAllPerfect: scoreManager.isAllPerfect()
       },
       true, // isCleared: there's no fail state anymore, every run that reaches RESULTS cleared the song
       nowMs,

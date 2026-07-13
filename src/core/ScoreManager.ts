@@ -49,6 +49,20 @@ export class ScoreManager {
     return "C";
   }
 
+  // True as long as no note was ever missed (early/late/good/perfect all
+  // continue combo, same as registerJudgment above) — guarded on total > 0 so
+  // a zero-note run doesn't falsely count as a full combo.
+  isFullCombo(): boolean {
+    const total = this.perfectCount + this.goodCount + this.earlyCount + this.lateCount + this.missCount;
+    return total > 0 && this.missCount === 0;
+  }
+
+  // Strictly stronger than isFullCombo(): every single hit was a Perfect,
+  // with no misses, goods, earlies, or lates at all.
+  isAllPerfect(): boolean {
+    return this.perfectCount > 0 && this.goodCount === 0 && this.earlyCount === 0 && this.lateCount === 0 && this.missCount === 0;
+  }
+
   reset(): void {
     this.score = 0;
     this.combo = 0;
