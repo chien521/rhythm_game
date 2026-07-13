@@ -22,14 +22,14 @@
     }
   },
   {
-    "id": "fur_elise",
-    "title": "Für Elise",
-    "artist": "Ludwig van Beethoven",
-    "bpm": 72,
-    "scoreUrl": "/scores/fur_elise.json",
+    "id": "bach_prelude_c",
+    "title": "Prelude in C Major",
+    "artist": "Johann Sebastian Bach",
+    "bpm": 60,
+    "scoreUrl": "/scores/bach_prelude_c.json",
     "charts": {
-      "Easy": "/charts/fur_elise_easy.json",
-      "Normal": "/charts/fur_elise.json"
+      "Easy": "/charts/bach_prelude_c_easy.json",
+      "Normal": "/charts/bach_prelude_c.json"
     }
   }
 ]
