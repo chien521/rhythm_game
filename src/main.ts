@@ -3,13 +3,23 @@ import { ChartManager } from "./core/ChartManager";
 import { InputManager } from "./core/InputManager";
 import { ScoreManager } from "./core/ScoreManager";
 import { BestScoreEntry, getAllBestScores, getBestScore, getBestScoreKey, updateBestScore } from "./core/ScoreStore";
-import { HitParticle, JudgmentDisplay, KeyFlash, Renderer, getPauseMenuRowRect, getSongSelectRowRect, UiRect } from "./render/Renderer";
+import {
+  HitParticle,
+  JudgmentDisplay,
+  KeyFlash,
+  Renderer,
+  getDifficultySelectRowRect,
+  getPauseMenuRowRect,
+  getSongSelectRowRect,
+  UiRect
+} from "./render/Renderer";
 import { computeViewport } from "./core/Viewport";
 import {
   AUDIO_OFFSET_MS,
   BASE_HEIGHT,
   BASE_WIDTH,
   ChartData,
+  DIFFICULTY_ORDER,
   GameState,
   INPUT_LATENCY_MS,
   JUDGMENT_TEXT_DURATION_MS,
@@ -18,6 +28,7 @@ import {
   PARTICLE_COUNT_MIN,
   PARTICLE_LIFESPAN_MS,
   SongManifest,
+  SongManifestEntry,
   STATE_FADE_DURATION_MS,
   VOLUME_BAR_RECT,
   VOLUME_ICON_WIDTH,
@@ -45,7 +56,8 @@ let recordedNotes: Array<{ time: number; lane: number; type: "tap" }> = []; // R
 let recordingSongId: string | null = null; // manifest id of the song currently being recorded, for the export filename/title
 let songManifest: SongManifest = []; // loaded once from /songs.json, before TITLE
 let selectedSongIndex = 0; // currently highlighted row in SONG_SELECT
-let activeSongId: string | null = null; // manifest id of the song currently loaded into chartData, set once startSelectedSong()'s load succeeds
+let selectedDifficultyIndex = 0; // currently highlighted row in DIFFICULTY_SELECT
+let activeSongId: string | null = null; // manifest id of the song currently loaded into chartData, set once loadAndPlaySong()'s load succeeds
 let activeDifficulty: string | null = null; // difficulty key (e.g. "Normal") paired with activeSongId, for ScoreStore lookups
 let resultsPreviousBest: BestScoreEntry | null = null; // snapshot taken by finishGameplay(), read once by the RESULTS render branch
 let resultsIsNewBest = false; // whether this run's finishGameplay() call just set a new best
@@ -130,7 +142,7 @@ async function loadSongManifest(url: string): Promise<SongManifest> {
 }
 
 // Fires immediately on script launch. Only the (small) manifest is fetched up
-// front — each song's actual audio/chart is loaded lazily in startSelectedSong(),
+// front — each song's actual audio/chart is loaded lazily in loadAndPlaySong(),
 // once the player picks it in SONG_SELECT, so adding songs never inflates the
 // initial load.
 async function loadAssets(): Promise<void> {
@@ -143,7 +155,7 @@ void loadAssets().catch((err: unknown) => {
 
 // Shared by the first SONG_SELECT -> GAMEPLAY transition and every RESULTS -> GAMEPLAY retry.
 function beginGameplay(): void {
-  if (!chartData) return; // guards against a click racing ahead of startSelectedSong(), shouldn't happen once past SONG_SELECT
+  if (!chartData) return; // guards against a click racing ahead of loadAndPlaySong(), shouldn't happen once past SONG_SELECT
 
   chartManager.loadChart(chartData);
   scoreManager.reset();
@@ -155,16 +167,29 @@ function beginGameplay(): void {
   setState("GAMEPLAY");
 }
 
-// Loads the currently-highlighted manifest entry's score + first difficulty
-// chart, then hands off to beginGameplay(). Guarded by loadingSelectedSong so
-// holding/mashing Enter can't fire overlapping loads. (The first score load
-// also fetches/decodes the shared piano samples — cached for every song after.)
-async function startSelectedSong(): Promise<void> {
+// Sorts a song's available difficulty keys per DIFFICULTY_ORDER, so the
+// DIFFICULTY_SELECT picker's row order is deterministic regardless of the
+// JSON key order in songs.json. Any key not present in DIFFICULTY_ORDER is
+// appended at the end, in original order, rather than silently dropped.
+function getSortedDifficultyNames(song: SongManifestEntry): string[] {
+  const keys = Object.keys(song.charts);
+  return keys.slice().sort((a, b) => {
+    const ai = DIFFICULTY_ORDER.indexOf(a as (typeof DIFFICULTY_ORDER)[number]);
+    const bi = DIFFICULTY_ORDER.indexOf(b as (typeof DIFFICULTY_ORDER)[number]);
+    const aRank = ai === -1 ? DIFFICULTY_ORDER.length : ai;
+    const bRank = bi === -1 ? DIFFICULTY_ORDER.length : bi;
+    return aRank - bRank;
+  });
+}
+
+// Loads the given song's score + the given difficulty's chart, then hands
+// off to beginGameplay(). Guarded by loadingSelectedSong so holding/mashing
+// Enter can't fire overlapping loads. (The first score load also fetches/
+// decodes the shared piano samples — cached for every song after.)
+async function loadAndPlaySong(song: SongManifestEntry, difficulty: string): Promise<void> {
   if (loadingSelectedSong) return;
-  const song = songManifest[selectedSongIndex];
-  const difficultyEntry = song ? Object.entries(song.charts)[0] : undefined;
-  if (!song || !difficultyEntry) return;
-  const [difficulty, chartPath] = difficultyEntry;
+  const chartPath = song.charts[difficulty];
+  if (!chartPath) return;
 
   loadingSelectedSong = true;
   try {
@@ -178,6 +203,41 @@ async function startSelectedSong(): Promise<void> {
   } finally {
     loadingSelectedSong = false;
   }
+}
+
+// SONG_SELECT's Enter/click handler. Songs with a single difficulty tier
+// load and play immediately (preserving the original zero-friction
+// behavior); songs with more than one tier open DIFFICULTY_SELECT instead.
+function confirmSongSelection(): void {
+  if (loadingSelectedSong) return;
+  const song = songManifest[selectedSongIndex];
+  if (!song) return;
+
+  const difficultyNames = getSortedDifficultyNames(song);
+  if (difficultyNames.length <= 1) {
+    const only = difficultyNames[0];
+    if (only) void loadAndPlaySong(song, only);
+    return;
+  }
+
+  selectedDifficultyIndex = 0;
+  setState("DIFFICULTY_SELECT");
+}
+
+// DIFFICULTY_SELECT's Enter/click handler — shared by BOTH the keyboard and
+// mouse handlers so they can never resolve the "same" row to a different
+// difficulty, mirroring activatePauseMenuOption's keyboard/mouse-parity
+// pattern below.
+function confirmDifficultySelection(index: number): void {
+  if (loadingSelectedSong) return;
+  const song = songManifest[selectedSongIndex];
+  if (!song) return;
+
+  const difficultyNames = getSortedDifficultyNames(song);
+  const difficulty = difficultyNames[index];
+  if (!difficulty) return;
+
+  void loadAndPlaySong(song, difficulty);
 }
 
 function finishGameplay(): void {
@@ -209,7 +269,7 @@ function activatePauseMenuOption(index: number): void {
   if (index === 0) {
     beginGameplay(); // re-loads chartData fresh and calls audioManager.restart(), which resets to 0ms and plays
   } else {
-    audioManager.pause(); // stop the audio; the next startSelectedSong() call resets position via loadAudioFile()/restart()
+    audioManager.pause(); // stop the audio; the next loadAndPlaySong() call resets position via loadAudioFile()/restart()
     setState("SONG_SELECT");
   }
 }
@@ -362,7 +422,7 @@ canvas.addEventListener("pointerdown", (e) => {
 
   const { px, py } = pointerToLogicalPx(e);
 
-  if (currentState === "SONG_SELECT" || currentState === "PAUSED") {
+  if (currentState === "SONG_SELECT" || currentState === "PAUSED" || currentState === "DIFFICULTY_SELECT") {
     if (isInsideRect(px, py, getVolumeIconRect())) {
       audioManager.toggleMute();
       return;
@@ -378,7 +438,17 @@ canvas.addEventListener("pointerdown", (e) => {
     for (let i = 0; i < songManifest.length; i++) {
       if (isInsideRect(px, py, getSongSelectRowRect(i, songManifest.length))) {
         selectedSongIndex = i;
-        void startSelectedSong();
+        confirmSongSelection();
+        return;
+      }
+    }
+  } else if (currentState === "DIFFICULTY_SELECT" && !loadingSelectedSong) {
+    const song = songManifest[selectedSongIndex];
+    const difficultyCount = song ? getSortedDifficultyNames(song).length : 0;
+    for (let i = 0; i < difficultyCount; i++) {
+      if (isInsideRect(px, py, getDifficultySelectRowRect(i, difficultyCount))) {
+        selectedDifficultyIndex = i;
+        confirmDifficultySelection(i);
         return;
       }
     }
@@ -421,6 +491,15 @@ canvas.addEventListener("pointermove", (e) => {
     for (let i = 0; i < songManifest.length; i++) {
       if (isInsideRect(px, py, getSongSelectRowRect(i, songManifest.length))) {
         selectedSongIndex = i;
+        break;
+      }
+    }
+  } else if (currentState === "DIFFICULTY_SELECT" && !loadingSelectedSong) {
+    const song = songManifest[selectedSongIndex];
+    const difficultyCount = song ? getSortedDifficultyNames(song).length : 0;
+    for (let i = 0; i < difficultyCount; i++) {
+      if (isInsideRect(px, py, getDifficultySelectRowRect(i, difficultyCount))) {
+        selectedDifficultyIndex = i;
         break;
       }
     }
@@ -479,7 +558,7 @@ window.addEventListener("keydown", (e) => {
 // both "keydown" listeners on window, so the very keydown that flips TITLE ->
 // SONG_SELECT is still dispatching when this listener runs immediately after
 // — currentState has already changed, so without a guard this same keypress
-// would instantly fire startSelectedSong(). transitionStartMs is set by
+// would instantly fire confirmSongSelection(). transitionStartMs is set by
 // setState() at the moment of that transition, so ignoring input for
 // STATE_FADE_DURATION_MS after entering the state filters out that bled-through
 // event while still feeling instant to a real, separate keypress.
@@ -499,7 +578,7 @@ window.addEventListener("keydown", (e) => {
     }
   } else if (e.code === "Enter") {
     e.preventDefault();
-    void startSelectedSong();
+    confirmSongSelection();
   } else if (e.code === "Escape") {
     e.preventDefault();
     setState("TITLE");
@@ -515,6 +594,49 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "KeyR") {
     e.preventDefault();
     void enterRecordingMode(); // records against whichever song is currently highlighted
+  }
+});
+
+// DIFFICULTY_SELECT: shown only for songs with more than one chart tier
+// (confirmSongSelection() skips straight to loadAndPlaySong() otherwise).
+// Same currentState/loadingSelectedSong/transitionStartMs debounce pattern as
+// the SONG_SELECT listener above — without the transitionStartMs guard, the
+// very same Enter keypress that opens this picker (fired while still on
+// SONG_SELECT) would instantly bleed through and self-confirm difficulty
+// index 0, since currentState has already flipped by the time this listener
+// runs on the same keydown event.
+window.addEventListener("keydown", (e) => {
+  if (currentState !== "DIFFICULTY_SELECT" || loadingSelectedSong) return;
+  if (performance.now() - transitionStartMs < STATE_FADE_DURATION_MS) return;
+
+  const song = songManifest[selectedSongIndex];
+  const difficultyCount = song ? getSortedDifficultyNames(song).length : 0;
+
+  if (e.code === "ArrowUp") {
+    e.preventDefault();
+    if (difficultyCount > 0) {
+      selectedDifficultyIndex = (selectedDifficultyIndex - 1 + difficultyCount) % difficultyCount;
+    }
+  } else if (e.code === "ArrowDown") {
+    e.preventDefault();
+    if (difficultyCount > 0) {
+      selectedDifficultyIndex = (selectedDifficultyIndex + 1) % difficultyCount;
+    }
+  } else if (e.code === "Enter") {
+    e.preventDefault();
+    confirmDifficultySelection(selectedDifficultyIndex);
+  } else if (e.code === "Escape") {
+    e.preventDefault();
+    setState("SONG_SELECT");
+  } else if (e.code === "ArrowLeft") {
+    e.preventDefault();
+    audioManager.setVolume(audioManager.volume - VOLUME_STEP);
+  } else if (e.code === "ArrowRight") {
+    e.preventDefault();
+    audioManager.setVolume(audioManager.volume + VOLUME_STEP);
+  } else if (e.code === "KeyM") {
+    e.preventDefault();
+    audioManager.toggleMute();
   }
 });
 
@@ -590,7 +712,7 @@ function frame(): void {
     renderer.clear();
     const bestScores = getAllBestScores();
     const rowBests = songManifest.map((song) => {
-      const difficulty = Object.keys(song.charts)[0];
+      const difficulty = "Normal" in song.charts ? "Normal" : Object.keys(song.charts)[0];
       return difficulty ? (bestScores[getBestScoreKey(song.id, difficulty)] ?? null) : null;
     });
     renderer.drawSongSelectScreen(
@@ -602,6 +724,24 @@ function frame(): void {
       audioManager.volume,
       audioManager.isMuted
     );
+  } else if (currentState === "DIFFICULTY_SELECT") {
+    renderer.clear();
+    const song = songManifest[selectedSongIndex];
+    if (song) {
+      const difficultyNames = getSortedDifficultyNames(song);
+      const bestScores = getAllBestScores();
+      const rowBests = difficultyNames.map((difficulty) => bestScores[getBestScoreKey(song.id, difficulty)] ?? null);
+      renderer.drawDifficultySelectScreen(
+        song,
+        difficultyNames,
+        rowBests,
+        selectedDifficultyIndex,
+        loadingSelectedSong,
+        nowMs,
+        audioManager.volume,
+        audioManager.isMuted
+      );
+    }
   } else if (currentState === "GAMEPLAY") {
     const songTimeMs = getEffectiveSongTime();
     chartManager.update(songTimeMs, inputManager.getHeldLanes());

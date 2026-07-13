@@ -125,8 +125,21 @@ export const SCREEN_SHAKE_MAGNITUDE_PX = 3;
 export const BASE_WIDTH = 1920;
 export const BASE_HEIGHT = 1080;
 
-export const GAME_STATES = ["LOADING", "TITLE", "SONG_SELECT", "GAMEPLAY", "PAUSED", "RESULTS", "RECORDING"] as const;
+export const GAME_STATES = [
+  "LOADING",
+  "TITLE",
+  "SONG_SELECT",
+  "DIFFICULTY_SELECT",
+  "GAMEPLAY",
+  "PAUSED",
+  "RESULTS",
+  "RECORDING"
+] as const;
 export type GameState = (typeof GAME_STATES)[number];
+
+// Deterministic sort order for the DIFFICULTY_SELECT picker's rows,
+// regardless of a song's charts JSON key order.
+export const DIFFICULTY_ORDER = ["Easy", "Normal"] as const;
 
 // Cosmetic cross-fade when switching states. Timed off performance.now(), not
 // songTimeMs, since TITLE has no audio clock yet and RESULTS has none running.

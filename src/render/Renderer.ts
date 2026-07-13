@@ -50,6 +50,18 @@ export function getSongSelectRowRect(index: number, total: number): UiRect {
   return { x: BASE_WIDTH / 2 - rowWidth / 2, y: y - rowHeight / 2 + 8, width: rowWidth, height: rowHeight - 16 };
 }
 
+// Shared layout for DIFFICULTY_SELECT's row list — same reasoning as
+// getSongSelectRowRect, but narrower since these rows only need a difficulty
+// name + a best-score line, not a song title + artist/BPM.
+export function getDifficultySelectRowRect(index: number, total: number): UiRect {
+  const rowHeight = 90;
+  const rowWidth = 520;
+  const listCenterY = BASE_HEIGHT / 2;
+  const startY = listCenterY - ((total - 1) * rowHeight) / 2;
+  const y = startY + index * rowHeight;
+  return { x: BASE_WIDTH / 2 - rowWidth / 2, y: y - rowHeight / 2 + 8, width: rowWidth, height: rowHeight - 16 };
+}
+
 // Shared layout for the PAUSED menu's 2 options — same reasoning as above.
 export function getPauseMenuRowRect(index: number): UiRect {
   const rowHeight = 80;
@@ -750,6 +762,91 @@ export class Renderer {
         this.ctx.fillStyle = "#8fe3ff";
         this.ctx.fillText(`${song.artist} • ${song.bpm} BPM`, BASE_WIDTH / 2, y);
 
+        this.ctx.font = "18px monospace";
+        this.ctx.fillStyle = best ? "#ffd700" : "rgba(143, 227, 255, 0.4)";
+        this.ctx.fillText(bestText, BASE_WIDTH / 2, y + 22);
+      } else {
+        this.ctx.font = "16px monospace";
+        this.ctx.fillStyle = best ? "rgba(143, 227, 255, 0.55)" : "rgba(143, 227, 255, 0.3)";
+        this.ctx.fillText(bestText, BASE_WIDTH / 2, y + 15);
+      }
+    });
+
+    this.ctx.globalAlpha = 0.8;
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "20px monospace";
+    this.ctx.fillText("↑ / ↓ TO BROWSE   ENTER TO CONTINUE   ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
+    this.ctx.globalAlpha = 1;
+
+    this.drawVolumeBar(VOLUME_BAR_RECT.x, VOLUME_BAR_RECT.y, VOLUME_BAR_RECT.width, VOLUME_BAR_RECT.height, volume, isMuted);
+
+    if (isLoading) {
+      this.ctx.fillStyle = "rgba(5, 6, 10, 0.6)";
+      this.ctx.fillRect(0, 0, BASE_WIDTH, BASE_HEIGHT);
+
+      const pulse = (Math.sin(nowMs / 150) + 1) / 2; // fast blink — reads as "busy, don't press anything"
+      this.ctx.globalAlpha = 0.55 + pulse * 0.45;
+      this.ctx.fillStyle = "#ffe066";
+      this.ctx.font = "bold 34px monospace";
+      this.ctx.fillText("LOADING TRACK...", BASE_WIDTH / 2, BASE_HEIGHT / 2);
+      this.ctx.globalAlpha = 1;
+    }
+
+    this.ctx.restore();
+  }
+
+  // Difficulty picker between SONG_SELECT and GAMEPLAY, shown only for songs
+  // with more than one chart tier. Mirrors drawSongSelectScreen's visual
+  // language exactly (selected-row translucent fill + glow outline, dim vs.
+  // bright text, per-row "BEST <grade> <score>"/"NO RECORD" line) so the two
+  // screens read as one continuous flow rather than a jarring different UI.
+  drawDifficultySelectScreen(
+    song: SongManifestEntry,
+    difficultyNames: readonly string[],
+    bestScores: readonly (BestScoreEntry | null)[], // same length/order as difficultyNames
+    selectedIndex: number,
+    isLoading: boolean,
+    nowMs: number,
+    volume: number,
+    isMuted: boolean
+  ): void {
+    this.ctx.save();
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.font = "bold 48px monospace";
+    this.ctx.fillText("SELECT DIFFICULTY", BASE_WIDTH / 2, BASE_HEIGHT * 0.15);
+
+    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.font = "22px monospace";
+    this.ctx.fillText(song.title, BASE_WIDTH / 2, BASE_HEIGHT * 0.15 + 40);
+
+    difficultyNames.forEach((name, i) => {
+      const rect = getDifficultySelectRowRect(i, difficultyNames.length);
+      const y = rect.y + rect.height / 2;
+      const isSelected = i === selectedIndex;
+      const nameY = isSelected ? y - 14 : y - 6;
+      const best = bestScores[i];
+      const bestText = best ? `BEST  ${best.grade}  ${Math.floor(best.score)}` : "NO RECORD";
+
+      if (isSelected) {
+        this.ctx.save();
+        this.ctx.fillStyle = "rgba(57, 246, 255, 0.15)";
+        this.ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.strokeStyle = "#39f6ff";
+        this.ctx.lineWidth = 2;
+        this.ctx.shadowColor = "#39f6ff";
+        this.ctx.shadowBlur = 12;
+        this.ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+        this.ctx.restore();
+      }
+
+      this.ctx.fillStyle = isSelected ? "#39f6ff" : "#8fe3ff";
+      this.ctx.font = isSelected ? "bold 32px monospace" : "26px monospace";
+      this.ctx.fillText(name.toUpperCase(), BASE_WIDTH / 2, nameY);
+
+      if (isSelected) {
         this.ctx.font = "18px monospace";
         this.ctx.fillStyle = best ? "#ffd700" : "rgba(143, 227, 255, 0.4)";
         this.ctx.fillText(bestText, BASE_WIDTH / 2, y + 22);
