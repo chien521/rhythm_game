@@ -619,7 +619,7 @@ function frame(): void {
     renderer.drawParticles(hitParticles, songTimeMs);
     renderer.drawJudgmentText(judgmentTexts, songTimeMs);
     renderer.drawHud(scoreManager.score, scoreManager.combo, comboChangedAt, songTimeMs);
-    renderer.drawDebug(songTimeMs, audioManager.playing);
+    renderer.drawProgressBar(songTimeMs, audioManager.getDuration(), audioManager.playing);
     renderer.endShake(shakeActive);
 
     if (pausedByFocusLoss) {

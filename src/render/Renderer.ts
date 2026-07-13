@@ -10,6 +10,7 @@ import {
   LANE_LABELS,
   PARTICLE_FRICTION,
   PARTICLE_LIFESPAN_MS,
+  PROGRESS_BAR_RECT,
   SCREEN_SHAKE_MAGNITUDE_PX,
   STATE_FADE_DURATION_MS,
   VOLUME_BAR_RECT,
@@ -22,6 +23,13 @@ import { computeViewport } from "../core/Viewport";
 import { SongManifestEntry } from "../config/constants";
 
 const clamp = (value: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, value));
+
+const formatTime = (ms: number): string => {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+};
 
 export interface UiRect {
   x: number;
@@ -436,11 +444,66 @@ export class Renderer {
     }
   }
 
-  drawDebug(songTimeMs: number, isPlaying: boolean): void {
+  // Song-progress bar: elapsed/total (mm:ss) above a filled track, with the
+  // percentage centered inside the bar itself. The percentage is drawn TWICE,
+  // each pass clipped to a different region (filled vs. unfilled), so it
+  // stays legible at any progress: dark text where it overlaps the bright
+  // cyan fill, light text where it overlaps the dark track — otherwise a
+  // single centered draw would be unreadable against the track for the first
+  // half of every song.
+  drawProgressBar(songTimeMs: number, durationMs: number, isPlaying: boolean): void {
+    const { x, y, width, height } = PROGRESS_BAR_RECT;
+    const progress = durationMs > 0 ? clamp(songTimeMs / durationMs, 0, 1) : 0;
+    const fillWidth = width * progress;
+    const activeColor = "#39f6ff";
+    const trackColor = "rgba(255, 255, 255, 0.15)";
+
+    this.ctx.save();
+
+    this.ctx.fillStyle = trackColor;
+    this.ctx.fillRect(x, y, width, height);
+
+    this.ctx.fillStyle = activeColor;
+    this.ctx.shadowColor = activeColor;
+    this.ctx.shadowBlur = 6;
+    this.ctx.fillRect(x, y, fillWidth, height);
+    this.ctx.shadowBlur = 0;
+
+    const pctText = `${Math.round(progress * 100)}%`;
+    const textX = x + width / 2;
+    const textY = y + height / 2;
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+    this.ctx.font = "bold 16px monospace";
+
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.rect(x, y, fillWidth, height);
+    this.ctx.clip();
+    this.ctx.fillStyle = "#05060a";
+    this.ctx.fillText(pctText, textX, textY);
+    this.ctx.restore();
+
+    this.ctx.save();
+    this.ctx.beginPath();
+    this.ctx.rect(x + fillWidth, y, width - fillWidth, height);
+    this.ctx.clip();
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.fillText(pctText, textX, textY);
+    this.ctx.restore();
+
+    this.ctx.textBaseline = "alphabetic";
+    this.ctx.font = "16px monospace";
     this.ctx.fillStyle = "#8fe3ff";
-    this.ctx.font = "20px monospace";
-    this.ctx.textAlign = "left";
-    this.ctx.fillText(`t=${songTimeMs.toFixed(1)}ms  ${isPlaying ? "PLAYING" : "PAUSED"} (space to pause)`, 20, 32);
+    this.ctx.fillText(`${formatTime(songTimeMs)} / ${formatTime(durationMs)}`, textX, y - 10);
+
+    if (!isPlaying) {
+      this.ctx.font = "14px monospace";
+      this.ctx.fillStyle = "rgba(143, 227, 255, 0.7)";
+      this.ctx.fillText("PAUSED (space to pause)", textX, y + height + 20);
+    }
+
+    this.ctx.restore();
   }
 
   // Manual pause menu (Space during GAMEPLAY): a dark scrim over the frozen

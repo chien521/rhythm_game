@@ -160,6 +160,16 @@ export const VOLUME_BAR_RECT = {
   height: 40
 } as const;
 
+// GAMEPLAY-only song-progress bar (elapsed/total + percent). Centered along
+// the top edge; kept clear of the top-right score HUD (drawHud ends ~x=1888)
+// by centering in the remaining top-center span.
+export const PROGRESS_BAR_RECT = {
+  x: BASE_WIDTH / 2 - 400,
+  y: 40,
+  width: 800,
+  height: 28
+} as const;
+
 // Deemo-style vertical fall layout: fixed 8-lane grid, split across two
 // keyboard rows for left/right hand separation.
 export const LANE_COUNT = 8;
