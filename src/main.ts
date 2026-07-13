@@ -1,8 +1,8 @@
 import { AudioManager } from "./core/AudioManager";
 import { ChartManager } from "./core/ChartManager";
-import { getHighScore, updateHighScore } from "./core/HighScoreStore";
 import { InputManager } from "./core/InputManager";
 import { ScoreManager } from "./core/ScoreManager";
+import { BestScoreEntry, getAllBestScores, getBestScore, getBestScoreKey, updateBestScore } from "./core/ScoreStore";
 import { HitParticle, JudgmentDisplay, KeyFlash, Renderer, getPauseMenuRowRect, getSongSelectRowRect, UiRect } from "./render/Renderer";
 import { computeViewport } from "./core/Viewport";
 import {
@@ -45,6 +45,10 @@ let recordedNotes: Array<{ time: number; lane: number; type: "tap" }> = []; // R
 let recordingSongId: string | null = null; // manifest id of the song currently being recorded, for the export filename/title
 let songManifest: SongManifest = []; // loaded once from /songs.json, before TITLE
 let selectedSongIndex = 0; // currently highlighted row in SONG_SELECT
+let activeSongId: string | null = null; // manifest id of the song currently loaded into chartData, set once startSelectedSong()'s load succeeds
+let activeDifficulty: string | null = null; // difficulty key (e.g. "Normal") paired with activeSongId, for ScoreStore lookups
+let resultsPreviousBest: BestScoreEntry | null = null; // snapshot taken by finishGameplay(), read once by the RESULTS render branch
+let resultsIsNewBest = false; // whether this run's finishGameplay() call just set a new best
 let loadingSelectedSong = false; // guards against a repeated Enter re-firing the async load
 let pauseMenuIndex = 0; // 0 = Restart, 1 = Back to Menu — currently highlighted row in the PAUSED overlay, driven by keyboard AND mouse hover alike
 let isDraggingVolume = false; // true while the mouse button is held down on the volume level bar
@@ -158,13 +162,16 @@ function beginGameplay(): void {
 async function startSelectedSong(): Promise<void> {
   if (loadingSelectedSong) return;
   const song = songManifest[selectedSongIndex];
-  const chartPath = song ? Object.values(song.charts)[0] : undefined;
-  if (!song || !chartPath) return;
+  const difficultyEntry = song ? Object.entries(song.charts)[0] : undefined;
+  if (!song || !difficultyEntry) return;
+  const [difficulty, chartPath] = difficultyEntry;
 
   loadingSelectedSong = true;
   try {
     const [chart] = await Promise.all([loadChart(chartPath), audioManager.loadScore(song.scoreUrl)]);
     chartData = chart;
+    activeSongId = song.id; // only set once the load actually succeeded, so a failure never leaves stale identity pointing at an unloaded song
+    activeDifficulty = difficulty;
     beginGameplay();
   } catch (err) {
     console.error(`Failed to load song "${song.id}":`, err);
@@ -175,7 +182,23 @@ async function startSelectedSong(): Promise<void> {
 
 function finishGameplay(): void {
   audioManager.pause();
-  updateHighScore(scoreManager.score);
+
+  if (activeSongId && activeDifficulty) {
+    const previous = getBestScore(activeSongId, activeDifficulty); // read BEFORE writing — needed for the comparison line even when this run IS the new best
+    const candidate: BestScoreEntry = {
+      score: scoreManager.score,
+      grade: scoreManager.getGrade(),
+      accuracy: scoreManager.getAccuracy(),
+      maxCombo: scoreManager.maxCombo
+    };
+    const { isNewBest } = updateBestScore(activeSongId, activeDifficulty, candidate);
+    resultsPreviousBest = previous;
+    resultsIsNewBest = isNewBest;
+  } else {
+    resultsPreviousBest = null;
+    resultsIsNewBest = false;
+  }
+
   setState("RESULTS");
 }
 
@@ -194,6 +217,8 @@ function activatePauseMenuOption(index: number): void {
 // Shared by RESULTS' Enter keydown handler and its mouse-click equivalent.
 function returnToTitleFromResults(): void {
   scoreManager.reset();
+  resultsPreviousBest = null;
+  resultsIsNewBest = false;
   setState("TITLE");
 }
 
@@ -560,11 +585,17 @@ function frame(): void {
     renderer.drawLoadingScreen(nowMs);
   } else if (currentState === "TITLE") {
     renderer.clear();
-    renderer.drawTitleScreen(getHighScore(), nowMs);
+    renderer.drawTitleScreen(nowMs);
   } else if (currentState === "SONG_SELECT") {
     renderer.clear();
+    const bestScores = getAllBestScores();
+    const rowBests = songManifest.map((song) => {
+      const difficulty = Object.keys(song.charts)[0];
+      return difficulty ? (bestScores[getBestScoreKey(song.id, difficulty)] ?? null) : null;
+    });
     renderer.drawSongSelectScreen(
       songManifest,
+      rowBests,
       selectedSongIndex,
       loadingSelectedSong,
       nowMs,
@@ -640,7 +671,9 @@ function frame(): void {
         grade: scoreManager.getGrade()
       },
       true, // isCleared: there's no fail state anymore, every run that reaches RESULTS cleared the song
-      nowMs
+      nowMs,
+      resultsPreviousBest,
+      resultsIsNewBest
     );
   }
 

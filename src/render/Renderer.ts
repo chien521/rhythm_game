@@ -17,6 +17,7 @@ import {
 } from "../config/constants";
 import { RuntimeNote } from "../core/ChartManager";
 import { Judgment } from "../core/ScoreManager";
+import { BestScoreEntry } from "../core/ScoreStore";
 import { computeViewport } from "../core/Viewport";
 import { SongManifestEntry } from "../config/constants";
 
@@ -611,7 +612,7 @@ export class Renderer {
     this.ctx.restore();
   }
 
-  drawTitleScreen(highScore: number, nowMs: number): void {
+  drawTitleScreen(nowMs: number): void {
     this.ctx.save();
     this.ctx.textAlign = "center";
 
@@ -620,11 +621,7 @@ export class Renderer {
     this.ctx.shadowColor = "#39f6ff";
     this.ctx.shadowBlur = 24;
     this.ctx.fillText("RHYTHM POC", BASE_WIDTH / 2, BASE_HEIGHT * 0.35);
-
     this.ctx.shadowBlur = 0;
-    this.ctx.fillStyle = "#8fe3ff";
-    this.ctx.font = "32px monospace";
-    this.ctx.fillText(`HIGH SCORE: ${Math.floor(highScore)}`, BASE_WIDTH / 2, BASE_HEIGHT * 0.48);
 
     const pulse = (Math.sin(nowMs / 300) + 1) / 2; // 0..1 idle pulse, cosmetic-only
     this.ctx.globalAlpha = 0.5 + pulse * 0.5;
@@ -638,12 +635,15 @@ export class Renderer {
   // Song Select: a simple centered vertical list, one row per manifest entry.
   // The highlighted row gets a translucent fill + glowing outline behind the
   // text (rather than just recoloring the text) so the current selection
-  // reads clearly even at a glance, plus an Artist/BPM subtext line. While
-  // isLoading is true (the async audio+chart fetch for the pick is in
-  // flight), a flashing full-screen overlay blocks the list from reading as
-  // interactive, so mashing Enter/arrows can't queue up a second load.
+  // reads clearly even at a glance, plus an Artist/BPM subtext line and (both
+  // rows) a best-score line sourced from ScoreStore — "NO RECORD" until that
+  // song/difficulty has been cleared once. While isLoading is true (the async
+  // audio+chart fetch for the pick is in flight), a flashing full-screen
+  // overlay blocks the list from reading as interactive, so mashing
+  // Enter/arrows can't queue up a second load.
   drawSongSelectScreen(
     songs: readonly SongManifestEntry[],
+    bestScores: readonly (BestScoreEntry | null)[], // same length/order as songs
     selectedIndex: number,
     isLoading: boolean,
     nowMs: number,
@@ -662,7 +662,9 @@ export class Renderer {
       const rect = getSongSelectRowRect(i, songs.length);
       const y = rect.y + rect.height / 2;
       const isSelected = i === selectedIndex;
-      const titleY = isSelected ? y - 14 : y;
+      const titleY = isSelected ? y - 24 : y - 12;
+      const best = bestScores[i];
+      const bestText = best ? `BEST  ${best.grade}  ${Math.floor(best.score)}` : "NO RECORD";
 
       if (isSelected) {
         this.ctx.save();
@@ -683,7 +685,15 @@ export class Renderer {
       if (isSelected) {
         this.ctx.font = "18px monospace";
         this.ctx.fillStyle = "#8fe3ff";
-        this.ctx.fillText(`${song.artist} • ${song.bpm} BPM`, BASE_WIDTH / 2, y + 20);
+        this.ctx.fillText(`${song.artist} • ${song.bpm} BPM`, BASE_WIDTH / 2, y);
+
+        this.ctx.font = "18px monospace";
+        this.ctx.fillStyle = best ? "#ffd700" : "rgba(143, 227, 255, 0.4)";
+        this.ctx.fillText(bestText, BASE_WIDTH / 2, y + 22);
+      } else {
+        this.ctx.font = "16px monospace";
+        this.ctx.fillStyle = best ? "rgba(143, 227, 255, 0.55)" : "rgba(143, 227, 255, 0.3)";
+        this.ctx.fillText(bestText, BASE_WIDTH / 2, y + 15);
       }
     });
 
@@ -714,10 +724,18 @@ export class Renderer {
   // cyan STAGE CLEAR vs. solid crimson STAGE FAILED, isCleared coming from
   // whether life remained above 0 at teardown), the grade sits front and
   // center, and a two-column stats matrix balances judgment counts (left)
-  // against the core score metrics (right) around BASE_WIDTH / 2. The footer
-  // prompt is the only way back to the menu now — keyboard-driven (Enter),
-  // replacing the old click-to-retry rect entirely.
-  drawResultsScreen(summary: ResultsSummary, isCleared: boolean, nowMs: number): void {
+  // against the core score metrics (right) around BASE_WIDTH / 2. Below that,
+  // a best-score comparison banner (previousBest/isNewBest, from ScoreStore
+  // via main.ts's finishGameplay()) fills the gap before the footer prompt —
+  // the only way back to the menu now, keyboard-driven (Enter), replacing the
+  // old click-to-retry rect entirely.
+  drawResultsScreen(
+    summary: ResultsSummary,
+    isCleared: boolean,
+    nowMs: number,
+    previousBest: BestScoreEntry | null,
+    isNewBest: boolean
+  ): void {
     this.ctx.save();
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "alphabetic";
@@ -778,6 +796,35 @@ export class Renderer {
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.fillText(`MAX COMBO ${summary.maxCombo}`, rightX, rowStartY + rowStep);
     this.ctx.fillText(`ACCURACY  ${summary.accuracy.toFixed(2)}%`, rightX, rowStartY + rowStep * 2);
+
+    // Best-score comparison banner: fills the gap between the stat matrix and
+    // the footer prompt. isNewBest covers both beating a real previous run
+    // AND a song/difficulty's first-ever clear (ScoreStore.updateBestScore
+    // always writes when no prior entry exists) — previousBest is only null
+    // in that first-clear case.
+    this.ctx.textAlign = "center";
+    if (isNewBest) {
+      const bannerPulse = (Math.sin(nowMs / 300) + 1) / 2;
+      this.ctx.globalAlpha = 0.55 + bannerPulse * 0.45;
+      this.ctx.fillStyle = "#ffd700";
+      this.ctx.shadowColor = "#ffd700";
+      this.ctx.shadowBlur = 16;
+      this.ctx.font = "bold 30px monospace";
+      this.ctx.fillText("NEW BEST SCORE!", BASE_WIDTH / 2, BASE_HEIGHT * 0.78);
+      this.ctx.shadowBlur = 0;
+      this.ctx.globalAlpha = 1;
+
+      this.ctx.font = "18px monospace";
+      this.ctx.fillStyle = "#8fe3ff";
+      const subline = previousBest
+        ? `PREVIOUS BEST: ${previousBest.grade}  ${Math.floor(previousBest.score)}`
+        : "FIRST CLEAR!";
+      this.ctx.fillText(subline, BASE_WIDTH / 2, BASE_HEIGHT * 0.815);
+    } else if (previousBest) {
+      this.ctx.font = "20px monospace";
+      this.ctx.fillStyle = "#8fe3ff";
+      this.ctx.fillText(`BEST: ${previousBest.grade}  ${Math.floor(previousBest.score)}`, BASE_WIDTH / 2, BASE_HEIGHT * 0.8);
+    }
 
     // Interactive footer: pulsing prompt, sine wave on nowMs.
     this.ctx.textAlign = "center";
