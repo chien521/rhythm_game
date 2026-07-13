@@ -20,5 +20,16 @@
       "Easy": "/charts/chopin_nocturne_easy.json",
       "Normal": "/charts/chopin_nocturne.json"
     }
+  },
+  {
+    "id": "fur_elise",
+    "title": "Für Elise",
+    "artist": "Ludwig van Beethoven",
+    "bpm": 72,
+    "scoreUrl": "/scores/fur_elise.json",
+    "charts": {
+      "Easy": "/charts/fur_elise_easy.json",
+      "Normal": "/charts/fur_elise.json"
+    }
   }
 ]
