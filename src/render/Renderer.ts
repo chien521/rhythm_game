@@ -779,7 +779,7 @@ export class Renderer {
     this.ctx.globalAlpha = 0.8;
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.font = "20px monospace";
-    this.ctx.fillText("↑ / ↓ TO BROWSE   ENTER TO CONTINUE   ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
+    this.ctx.fillText("↑ / ↓ TO BROWSE   ENTER TO CONTINUE   S SETTINGS   ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
     this.ctx.globalAlpha = 1;
 
     this.drawVolumeBar(VOLUME_BAR_RECT.x, VOLUME_BAR_RECT.y, VOLUME_BAR_RECT.width, VOLUME_BAR_RECT.height, volume, isMuted);
