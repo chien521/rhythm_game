@@ -152,11 +152,20 @@ export class PianoSynth {
 
     // Natural sample decay until the note's written end, then a release ramp
     // (sustain-pedal resonance is not modeled — acceptable v1 tradeoff).
+    // Release time scales with the note's OWN duration (capped at
+    // NOTE_RELEASE_SEC, floored at 50ms) rather than a fixed 400ms for every
+    // note: a fixed tail on short/fast notes (e.g. a trill) rings on well
+    // past several subsequent note-starts, and since nearby pitches often
+    // reuse the same underlying sample (just pitch-shifted), those
+    // overlapping near-identical tails produce audible phase-cancellation
+    // ("warble"/comb-filtering). A briefly-struck note decaying faster than a
+    // long-held one also matches real piano physics.
     const noteEnd = atContextTime + note.durationMs / 1000;
-    gain.gain.setTargetAtTime(0, noteEnd, NOTE_RELEASE_SEC / 3);
+    const releaseSec = Math.min(NOTE_RELEASE_SEC, Math.max(0.05, (note.durationMs / 1000) * 0.5));
+    gain.gain.setTargetAtTime(0, noteEnd, releaseSec / 3);
 
     source.start(atContextTime);
-    source.stop(noteEnd + NOTE_RELEASE_SEC * 4);
+    source.stop(noteEnd + releaseSec * 4);
 
     const voice = { source, gain };
     this.activeSources.add(voice);
