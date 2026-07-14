@@ -62,7 +62,12 @@ export class PianoSynth {
 
       await Promise.all(
         midis.map(async (midi) => {
-          const url = `/samples/piano/${sampleFileName(midi)}`;
+          // Root-absolute here would 404 on a GitHub Pages PROJECT page (e.g.
+          // https://<user>.github.io/<repo>/), where "/samples/..." resolves
+          // to the domain root instead of the repo subpath. BASE_URL is
+          // Vite's own resolved base (see vite.config.ts), so this keeps the
+          // fetch correct regardless of what subpath the app is deployed under.
+          const url = `${import.meta.env.BASE_URL}samples/piano/${sampleFileName(midi)}`;
           const res = await fetch(url);
           if (!res.ok) throw new Error(`Failed to fetch piano sample: ${url} (${res.status})`);
           const buffer = await this.context.decodeAudioData(await res.arrayBuffer());
