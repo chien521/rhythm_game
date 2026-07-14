@@ -98,6 +98,10 @@ export const MISSED_WINDOW_MS = JUDGMENT_WINDOWS_MS.good;
 // close enough" check and the miss cutoff — no separate start/end phase.
 export const SLIDE_WINDOW_MS = 100;
 
+// A hold counts as completed if the key is still held until within this
+// many ms of the tail — end-of-hold release tolerance.
+export const HOLD_RELEASE_GRACE_MS = 120;
+
 export const SCORE_VALUES = {
   perfect: 1000,
   good: 500,

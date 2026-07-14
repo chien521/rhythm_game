@@ -4,16 +4,18 @@ import {
   ChartNote,
   computeLookaheadMs,
   computeNoteVelocity,
+  HOLD_RELEASE_GRACE_MS,
   MISSED_WINDOW_MS,
   SLIDE_WINDOW_MS
 } from "../config/constants";
 import { resolveJudgment } from "./JudgmentEngine";
 import { Judgment } from "./ScoreManager";
 
-export type NoteStatus = "pending" | "hit" | "missed";
+export type NoteStatus = "pending" | "holding" | "hit" | "missed";
 
 export interface RuntimeNote extends ChartNote {
   status: NoteStatus;
+  heldGrade?: Judgment; // for holds: grade captured at head press, emitted on completion
 }
 
 export interface JudgmentEvent {
@@ -75,26 +77,39 @@ export class ChartManager {
   }
 
   // heldLanes: lanes whose mapped key is currently down — drives the slide
-  // auto-hit check (no discrete keydown required, just "were you holding it").
+  // auto-hit check (no discrete keydown required, just "were you holding it")
+  // and, for holds, the ongoing release check below.
   update(songTimeMs: number, heldLanes: ReadonlySet<number>): void {
     const active: RuntimeNote[] = [];
 
     for (const note of this.notes) {
       const spawnTime = note.time - this.lookaheadMs;
-      const windowMs = judgmentWindowMs(note.type);
-      const missCutoff = note.time + windowMs;
+      const isHold = note.type === "hold";
+      const tail = isHold ? note.time + (note.durationMs ?? 0) : note.time;
+      const headMissCutoff = note.time + judgmentWindowMs(note.type); // head press deadline (unchanged for taps)
+      const activeEnd = isHold ? tail : headMissCutoff; // holds stay active through their whole body
 
       if (note.status === "pending") {
         if (note.type === "slide" && Math.abs(songTimeMs - note.time) <= SLIDE_WINDOW_MS && heldLanes.has(note.x)) {
           note.status = "hit";
           this.emitJudgment(note, "perfect", songTimeMs);
-        } else if (songTimeMs > missCutoff) {
+        } else if (songTimeMs > headMissCutoff) {
           note.status = "missed";
           this.emitJudgment(note, "miss", songTimeMs);
         }
+      } else if (note.status === "holding") {
+        const releaseDeadline = tail - HOLD_RELEASE_GRACE_MS;
+        if (songTimeMs >= releaseDeadline) {
+          note.status = "hit";
+          this.emitJudgment(note, note.heldGrade ?? "good", songTimeMs); // completed: emit the captured grade
+        } else if (!heldLanes.has(note.x)) {
+          note.status = "missed";
+          this.emitJudgment(note, "miss", songTimeMs); // released too early
+        }
+        // else: still holding, do nothing this frame
       }
 
-      if (songTimeMs >= spawnTime && songTimeMs <= missCutoff) {
+      if (songTimeMs >= spawnTime && songTimeMs <= activeEnd) {
         active.push(note);
       }
     }
@@ -139,7 +154,13 @@ export class ChartManager {
       }
       return;
     }
-
+    if (candidate.type === "hold") {
+      const judgment = resolveJudgment(delta);
+      if (judgment === null) return; // too far off — leave pending
+      candidate.status = "holding";
+      candidate.heldGrade = judgment; // captured, NOT emitted yet — emitted on completion/release in update()
+      return;
+    }
     const judgment = resolveJudgment(delta);
     if (judgment === null) return; // too far off to be a legitimate attempt \u2014 leave the note pending
 
