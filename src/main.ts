@@ -60,6 +60,7 @@ let recordingSongId: string | null = null; // manifest id of the song currently 
 let songManifest: SongManifest = []; // loaded once from /songs.json, before TITLE
 let selectedSongIndex = 0; // currently highlighted row in SONG_SELECT
 let selectedDifficultyIndex = 0; // currently highlighted row in DIFFICULTY_SELECT
+let settingsReturnState: GameState = "SONG_SELECT"; // where SETTINGS' Escape returns to — whichever screen opened it
 let activeSongId: string | null = null; // manifest id of the song currently loaded into chartData, set once loadAndPlaySong()'s load succeeds
 let activeDifficulty: string | null = null; // difficulty key (e.g. "Normal") paired with activeSongId, for ScoreStore lookups
 let resultsPreviousBest: BestScoreEntry | null = null; // snapshot taken by finishGameplay(), read once by the RESULTS render branch
@@ -600,17 +601,19 @@ window.addEventListener("keydown", (e) => {
     void enterRecordingMode(); // records against whichever song is currently highlighted
   } else if (e.code === "KeyS") {
     e.preventDefault();
+    settingsReturnState = "SONG_SELECT";
     setState("SETTINGS");
     audioManager.startMetronome();
   }
 });
 
 // SETTINGS: live-adjustable AUDIO_OFFSET_MS override, opened from SONG_SELECT
-// (KeyS above) and always returning there on Escape. Same
-// currentState/transitionStartMs debounce guard as every other screen's own
-// listener — without it, the very same Escape keypress that leaves SETTINGS
-// would instantly bleed through into whatever screen's listener runs next on
-// that same keydown event, since currentState has already flipped by then.
+// or PAUSED (both via KeyS) and returning to whichever of those opened it on
+// Escape, via settingsReturnState. Same currentState/transitionStartMs
+// debounce guard as every other screen's own listener — without it, the very
+// same Escape keypress that leaves SETTINGS would instantly bleed through
+// into whatever screen's listener runs next on that same keydown event, since
+// currentState has already flipped by then.
 window.addEventListener("keydown", (e) => {
   if (currentState !== "SETTINGS") return;
   if (performance.now() - transitionStartMs < STATE_FADE_DURATION_MS) return;
@@ -626,7 +629,7 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "Escape") {
     e.preventDefault();
     audioManager.stopMetronome();
-    setState("SONG_SELECT");
+    setState(settingsReturnState);
   }
 });
 
@@ -729,6 +732,11 @@ window.addEventListener("keydown", (e) => {
   } else if (e.code === "KeyM") {
     e.preventDefault();
     audioManager.toggleMute();
+  } else if (e.code === "KeyS") {
+    e.preventDefault();
+    settingsReturnState = "PAUSED";
+    setState("SETTINGS");
+    audioManager.startMetronome();
   }
 });
 

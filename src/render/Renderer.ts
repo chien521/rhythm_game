@@ -569,7 +569,7 @@ export class Renderer {
     this.ctx.globalAlpha = 0.8;
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.font = "18px monospace";
-    this.ctx.fillText("\u2191 / \u2193 TO SELECT   ENTER TO CONFIRM   SPACE TO RESUME", BASE_WIDTH / 2, BASE_HEIGHT * 0.8);
+    this.ctx.fillText("\u2191 / \u2193 TO SELECT   ENTER TO CONFIRM   S SETTINGS   SPACE TO RESUME", BASE_WIDTH / 2, BASE_HEIGHT * 0.8);
     this.drawVolumeBar(VOLUME_BAR_RECT.x, VOLUME_BAR_RECT.y, VOLUME_BAR_RECT.width, VOLUME_BAR_RECT.height, volume, isMuted);
 
     this.ctx.restore();
