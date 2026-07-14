@@ -4,6 +4,7 @@ import {
   BASE_HEIGHT,
   BASE_WIDTH,
   COMBO_POP_DURATION_MS,
+  COUNTDOWN_MS,
   JUDGMENT_LINE_Y,
   JUDGMENT_POP_DURATION_MS,
   JUDGMENT_TEXT_DURATION_MS,
@@ -518,6 +519,36 @@ export class Renderer {
       this.ctx.fillStyle = "rgba(143, 227, 255, 0.7)";
       this.ctx.fillText("PAUSED (space to pause)", textX, y + height + 20);
     }
+
+    this.ctx.restore();
+  }
+
+  // Pre-game countdown lead-in: GAMEPLAY's song-time clock starts at
+  // -COUNTDOWN_MS and rises to 0 (see AudioManager.restart()'s leadInMs), so
+  // notes are already falling in normally by the time it hits 0 — this just
+  // overlays the "3 2 1" on top of that. Drawn as long as songTimeMs is still
+  // negative; input isn't locked during it (existing judgment windows already
+  // make early presses inert).
+  drawCountdown(songTimeMs: number): void {
+    if (songTimeMs >= 0) return;
+
+    const secondsLeft = Math.min(Math.ceil(COUNTDOWN_MS / 1000), Math.ceil(-songTimeMs / 1000));
+    const frac = (-songTimeMs / 1000) % 1; // ~1 -> 0 within each second, drives the scale-pop below
+    const scale = 1 + 0.4 * frac;
+
+    this.ctx.save();
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "middle";
+
+    this.ctx.translate(BASE_WIDTH / 2, BASE_HEIGHT / 2);
+    this.ctx.scale(scale, scale);
+
+    this.ctx.fillStyle = "#e6faff";
+    this.ctx.font = "bold 140px monospace";
+    this.ctx.shadowColor = "#39f6ff";
+    this.ctx.shadowBlur = 24;
+    this.ctx.fillText(`${secondsLeft}`, 0, 0);
+    this.ctx.shadowBlur = 0;
 
     this.ctx.restore();
   }

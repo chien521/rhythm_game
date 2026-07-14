@@ -22,6 +22,7 @@ import {
   BASE_HEIGHT,
   BASE_WIDTH,
   ChartData,
+  COUNTDOWN_MS,
   DIFFICULTY_ORDER,
   GameState,
   INPUT_LATENCY_MS,
@@ -168,7 +169,7 @@ function beginGameplay(): void {
   hitParticles = [];
   keyFlashes = [];
   comboChangedAt = 0;
-  audioManager.restart(); // first call here also resumes the AudioContext — inside this gesture handler
+  audioManager.restart(COUNTDOWN_MS); // first call here also resumes the AudioContext — inside this gesture handler; starts song-time at -COUNTDOWN_MS for the pre-game countdown lead-in
   setState("GAMEPLAY");
 }
 
@@ -805,6 +806,7 @@ function frame(): void {
     renderer.drawJudgmentText(judgmentTexts, songTimeMs);
     renderer.drawHud(scoreManager.score, scoreManager.combo, comboChangedAt, songTimeMs);
     renderer.drawProgressBar(songTimeMs, audioManager.getDuration(), audioManager.playing);
+    if (songTimeMs < 0) renderer.drawCountdown(songTimeMs);
     renderer.endShake(shakeActive);
 
     if (pausedByFocusLoss) {

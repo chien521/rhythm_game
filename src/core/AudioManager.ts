@@ -103,13 +103,19 @@ export class AudioManager {
     this.isPlaying = false;
   }
 
-  // Stops any current playback and starts over from song-time 0 — used for retry.
-  restart(): void {
+  // Stops any current playback and starts over from song-time -leadInMs (used
+  // for retry). A positive leadInMs makes getSongTime() begin negative and
+  // rise to 0 — a pre-game countdown lead-in — while play()'s existing
+  // `startContextTime = context.currentTime - pausedAtSongTime / 1000` and
+  // PianoSynth's note scheduling already handle a negative starting song-time
+  // correctly, so no other logic needs to change. Default 0 keeps every other
+  // caller (e.g. Recording Mode) starting immediately, unchanged.
+  restart(leadInMs = 0): void {
     if (this.isPlaying && this.synth) {
       this.synth.stop();
       this.isPlaying = false;
     }
-    this.pausedAtSongTime = 0;
+    this.pausedAtSongTime = -leadInMs;
     this.play();
   }
 

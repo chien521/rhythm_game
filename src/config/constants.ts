@@ -146,6 +146,12 @@ export const DIFFICULTY_ORDER = ["Easy", "Normal"] as const;
 // songTimeMs, since TITLE has no audio clock yet and RESULTS has none running.
 export const STATE_FADE_DURATION_MS = 400;
 
+// Pre-game countdown lead-in: GAMEPLAY's song-time clock starts at
+// -COUNTDOWN_MS and rises to 0 (see AudioManager.restart()'s leadInMs param),
+// so notes fall in normally during the countdown instead of the first note
+// appearing at the judgment line with no time to react.
+export const COUNTDOWN_MS = 3000;
+
 // SETTINGS screen's adjustable range/step for the live AUDIO_OFFSET_MS
 // override persisted via SettingsStore.
 export const AUDIO_OFFSET_MIN_MS = -500;
