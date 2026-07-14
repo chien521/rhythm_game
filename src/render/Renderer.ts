@@ -1025,7 +1025,7 @@ export class Renderer {
     this.ctx.globalAlpha = 0.8;
     this.ctx.fillStyle = "#8fe3ff";
     this.ctx.font = "20px monospace";
-    this.ctx.fillText("← / → ADJUST     ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
+    this.ctx.fillText("← / → ADJUST     S / ESC TO GO BACK", BASE_WIDTH / 2, BASE_HEIGHT * 0.85);
     this.ctx.globalAlpha = 1;
 
     this.ctx.restore();
