@@ -267,7 +267,8 @@
       "id": "n44",
       "time": 8125,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n45",
@@ -381,7 +382,8 @@
       "id": "n63",
       "time": 11667,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n64",
@@ -471,7 +473,8 @@
       "id": "n78",
       "time": 14792,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1338
     },
     {
       "id": "n79",
@@ -585,7 +588,8 @@
       "id": "n97",
       "time": 18333,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n98",
@@ -675,7 +679,8 @@
       "id": "n112",
       "time": 21458,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n113",
@@ -789,7 +794,8 @@
       "id": "n131",
       "time": 25000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n132",
@@ -1017,7 +1023,8 @@
       "id": "n169",
       "time": 31667,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n170",
@@ -1107,7 +1114,8 @@
       "id": "n184",
       "time": 34792,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n185",
@@ -1221,7 +1229,8 @@
       "id": "n203",
       "time": 38333,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n204",
@@ -1311,7 +1320,8 @@
       "id": "n218",
       "time": 41458,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1339
     },
     {
       "id": "n219",
@@ -1425,7 +1435,8 @@
       "id": "n237",
       "time": 45000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n238",
@@ -1515,7 +1526,8 @@
       "id": "n252",
       "time": 48125,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n253",
@@ -1629,7 +1641,8 @@
       "id": "n271",
       "time": 51667,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n272",
@@ -1857,7 +1870,8 @@
       "id": "n309",
       "time": 58333,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n310",
@@ -2343,7 +2357,8 @@
       "id": "n390",
       "time": 71667,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n391",
@@ -2583,7 +2598,8 @@
       "id": "n430",
       "time": 78333,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n431",
@@ -2799,7 +2815,8 @@
       "id": "n466",
       "time": 84792,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n467",
@@ -3297,7 +3314,8 @@
       "id": "n549",
       "time": 98333,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n550",
@@ -3537,7 +3555,8 @@
       "id": "n589",
       "time": 105000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n590",
@@ -3753,7 +3772,8 @@
       "id": "n625",
       "time": 111458,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1339
     },
     {
       "id": "n626",
@@ -3843,7 +3863,8 @@
       "id": "n640",
       "time": 114792,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n641",
@@ -3957,7 +3978,8 @@
       "id": "n659",
       "time": 118333,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n660",
@@ -4047,7 +4069,8 @@
       "id": "n674",
       "time": 121458,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1339
     },
     {
       "id": "n675",
@@ -4161,7 +4184,8 @@
       "id": "n693",
       "time": 125000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1250
     },
     {
       "id": "n694",
@@ -4251,7 +4275,8 @@
       "id": "n708",
       "time": 128125,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n709",
@@ -4365,7 +4390,8 @@
       "id": "n727",
       "time": 131667,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1130
     },
     {
       "id": "n728",
@@ -4671,7 +4697,8 @@
       "id": "n778",
       "time": 141667,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1667
     },
     {
       "id": "n779",
@@ -4779,7 +4806,8 @@
       "id": "n796",
       "time": 145000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1458
     },
     {
       "id": "n797",
@@ -5079,7 +5107,8 @@
       "id": "n846",
       "time": 155000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1667
     },
     {
       "id": "n847",
@@ -5187,7 +5216,8 @@
       "id": "n864",
       "time": 158333,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1458
     },
     {
       "id": "n865",
@@ -5511,7 +5541,8 @@
       "id": "n918",
       "time": 168333,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1667
     },
     {
       "id": "n919",
@@ -5619,7 +5650,8 @@
       "id": "n936",
       "time": 171667,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1458
     },
     {
       "id": "n937",
@@ -5919,7 +5951,8 @@
       "id": "n986",
       "time": 181667,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1667
     },
     {
       "id": "n987",
@@ -6027,7 +6060,8 @@
       "id": "n1004",
       "time": 185000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1458
     },
     {
       "id": "n1005",
@@ -6447,7 +6481,8 @@
       "id": "n1074",
       "time": 198125,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n1075",
@@ -8211,7 +8246,8 @@
       "id": "n1368",
       "time": 251458,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1042
     },
     {
       "id": "n1369",

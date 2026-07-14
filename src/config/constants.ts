@@ -31,7 +31,7 @@ export const AUDIO_OFFSET_MS = 0;
 // earlier); negative assumes input arrives early.
 export const INPUT_LATENCY_MS = 0;
 
-export const NOTE_TYPES = ["tap", "slide"] as const;
+export const NOTE_TYPES = ["tap", "slide", "hold"] as const;
 export type NoteType = (typeof NOTE_TYPES)[number];
 
 export interface ChartNote {
@@ -39,6 +39,7 @@ export interface ChartNote {
   time: number; // ms, relative to song start
   x: number; // lane index 0-7
   type: NoteType;
+  durationMs?: number; // present only for type "hold": ms the key must stay held past `time` (head is still an exact onset)
 }
 
 export interface ChartMeta {

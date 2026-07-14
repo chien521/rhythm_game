@@ -79,7 +79,8 @@ const laneCenterX = (lane: number): number => (lane + 0.5) * LANE_WIDTH;
 
 const NOTE_COLORS: Record<RuntimeNote["type"], string> = {
   tap: "#39f6ff",
-  slide: "#ffd166"
+  slide: "#ffd166",
+  hold: "#39f6ff" // Stage A: hold notes render/behave identically to taps until later gameplay/visual stages land
 };
 const FADE_IN_MS = 250;
 

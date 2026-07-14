@@ -35,6 +35,10 @@
 //   --quantize=<off|quarter|8th|16th> Stage 3: snap to meta.bpm's beat grid. Default off (see above).
 //   --target=<min>-<max>              Stage 4: auto-tune --min-gap to land total notes/sec in this band.
 //   --auto                            Shorthand for --target=2-4.
+//   --hold-beats=<n>                  A kept note becomes a HOLD (type "hold"
+//                                     + durationMs) when its score duration is
+//                                     >= n beats, tempo-relative (n*60000/bpm
+//                                     ms). Default 1. Set very high to disable.
 //   --out=<id>                        Output chart id. Defaults to the score's id.
 //   --report-only                     Print the stage breakdown; don't write the chart.
 //
@@ -51,6 +55,11 @@ const DEFAULT_CLUSTER_MS = 30;
 const DEFAULT_MIN_GAP_MS = 150;
 const DEFAULT_QUANTIZE = "off";
 const DEFAULT_TARGET_BAND = [2, 4];
+
+// Breathing room (ms) enforced between a hold's tail and the next note in the
+// SAME lane — a hold's effective duration is always clipped so the player can
+// release and re-press in time, never so long it swallows the next hit.
+const MIN_HOLD_GAP_MS = 120;
 
 const QUANTIZE_DIVISORS = { quarter: 1, "8th": 2, "16th": 4 };
 const LANES_PER_HAND = 4;
@@ -93,6 +102,11 @@ const clusterMs = flags["cluster-ms"] !== undefined ? Number(flags["cluster-ms"]
 const minGapMs = flags["min-gap"] !== undefined ? Number(flags["min-gap"]) : DEFAULT_MIN_GAP_MS;
 const quantize = flags["quantize"] !== undefined ? String(flags["quantize"]) : DEFAULT_QUANTIZE;
 const reportOnly = Boolean(flags["report-only"]);
+// A kept note becomes a hold when its score duration is >= this many beats,
+// tempo-relative (holdMinMs below) rather than a fixed ms cutoff — an eighth
+// note is 500ms at 60bpm but less at faster tempos. Default 1 beat; set very
+// high to effectively disable holds.
+const holdBeats = flags["hold-beats"] !== undefined ? Number(flags["hold-beats"]) : 1;
 
 let targetBand = null;
 if (flags["auto"] && flags["target"] === undefined) {
@@ -115,6 +129,7 @@ if (quantize !== "off" && !(quantize in QUANTIZE_DIVISORS)) {
 
 const score = JSON.parse(readFileSync(scorePath, "utf8"));
 const songDurationSec = score.meta.durationMs / 1000;
+const holdMinMs = (holdBeats * 60000) / score.meta.bpm;
 
 // Lane assignment is deferred until after thinning (see laneBoundsFor/
 // noteToLane below, computed from `working`) — pitch quantiles among the
@@ -270,14 +285,43 @@ function noteToLane(note) {
   return base + within; // base .. base+3
 }
 
-const notes = working
-  .map((note, i) => ({
-    id: `n${i + 1}`,
-    time: Math.round(note.time),
-    x: noteToLane(note),
-    type: "tap"
-  }))
-  .sort((a, b) => a.time - b.time);
+const notes = (() => {
+  // Lanes must be known before hold-eligibility can be computed (a hold's
+  // tail is clipped against the NEXT note in the SAME lane), so lane the
+  // whole kept list first. `working` is already time-sorted.
+  const laned = working.map((n) => ({ ...n, lane: noteToLane(n) }));
+
+  // Reverse pass: for each lane, remember the time of the next note in that
+  // same lane (Infinity if none follows).
+  const nextTimeByLane = new Array(LANES_PER_HAND * 2).fill(Infinity);
+  const nextSameLane = new Array(laned.length);
+  for (let i = laned.length - 1; i >= 0; i--) {
+    nextSameLane[i] = nextTimeByLane[laned[i].lane];
+    nextTimeByLane[laned[i].lane] = laned[i].time;
+  }
+
+  return laned
+    .map((note, i) => {
+      const roomMs = nextSameLane[i] - note.time - MIN_HOLD_GAP_MS;
+      const songRoom = songDurationSec * 1000 - note.time; // never past song end
+      const effDur = Math.min(note.durationMs, roomMs, songRoom);
+      const isHold = effDur >= holdMinMs;
+
+      return {
+        id: `n${i + 1}`,
+        time: Math.round(note.time),
+        x: note.lane,
+        type: isHold ? "hold" : "tap",
+        ...(isHold ? { durationMs: Math.round(effDur) } : {})
+      };
+    })
+    .sort((a, b) => a.time - b.time);
+})();
+
+const holdCount = notes.filter((n) => n.type === "hold").length;
+console.log(
+  `${holdCount} holds of ${notes.length} notes (${((holdCount / notes.length) * 100 || 0).toFixed(1)}%)`
+);
 
 const chart = {
   meta: {

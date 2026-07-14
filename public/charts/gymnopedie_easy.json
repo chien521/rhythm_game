@@ -9,535 +9,624 @@
       "id": "n1",
       "time": 0,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n2",
       "time": 1000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n3",
       "time": 3000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n4",
       "time": 4000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n5",
       "time": 6000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n6",
       "time": 7000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n7",
       "time": 9000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n8",
       "time": 10000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n9",
       "time": 12000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n10",
       "time": 13000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n11",
       "time": 15000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n12",
       "time": 16000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n13",
       "time": 18000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n14",
       "time": 19000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n15",
       "time": 21000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n16",
       "time": 22000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n17",
       "time": 24000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n18",
       "time": 25000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n19",
       "time": 27000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n20",
       "time": 28000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n21",
       "time": 30000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n22",
       "time": 31000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n23",
       "time": 33000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n24",
       "time": 34000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n25",
       "time": 36000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n26",
       "time": 39000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n27",
       "time": 42000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n28",
       "time": 44000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n29",
       "time": 45000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n30",
       "time": 46000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n31",
       "time": 48000,
       "x": 2,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n32",
       "time": 48000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n33",
       "time": 51000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n34",
       "time": 51000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n35",
       "time": 54000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n36",
       "time": 54000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 9000
     },
     {
       "id": "n37",
       "time": 57000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n38",
       "time": 60000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n39",
       "time": 63000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n40",
       "time": 66000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n41",
       "time": 69000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n42",
       "time": 71000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n43",
       "time": 72000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n44",
       "time": 75000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n45",
       "time": 78000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n46",
       "time": 81000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n47",
       "time": 83000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n48",
       "time": 84000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n49",
       "time": 85000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n50",
       "time": 87000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n51",
       "time": 87000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 4880
     },
     {
       "id": "n52",
       "time": 90000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n53",
       "time": 92000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n54",
       "time": 93000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n55",
       "time": 94000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2000
     },
     {
       "id": "n56",
       "time": 96000,
       "x": 2,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n57",
       "time": 96000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n58",
       "time": 99000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n59",
       "time": 99000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n60",
       "time": 101000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n61",
       "time": 102000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n62",
       "time": 103000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n63",
       "time": 105000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n64",
       "time": 105000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n65",
       "time": 107000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n66",
       "time": 108000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n67",
       "time": 109000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n68",
       "time": 110000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n69",
       "time": 111000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n70",
       "time": 114000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n71",
       "time": 114000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n72",
       "time": 117000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n73",
       "time": 117000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n74",
       "time": 120000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n75",
       "time": 120000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n76",
       "time": 123000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n77",
       "time": 123000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n78",
       "time": 125000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n79",
       "time": 126000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n80",
       "time": 127000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n81",
       "time": 129000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n82",
       "time": 129000,
       "x": 7,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n83",
       "time": 131000,
       "x": 6,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n84",
       "time": 132000,
       "x": 1,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n85",
       "time": 133000,
       "x": 4,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n86",
       "time": 134000,
       "x": 3,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 1000
     },
     {
       "id": "n87",
       "time": 135000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 2880
     },
     {
       "id": "n88",
       "time": 138000,
       "x": 0,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     },
     {
       "id": "n89",
       "time": 138000,
       "x": 5,
-      "type": "tap"
+      "type": "hold",
+      "durationMs": 3000
     }
   ]
 }

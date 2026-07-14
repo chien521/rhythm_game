@@ -10,7 +10,9 @@
 //      note you're asked to hit is a note the piano actually plays. Skipped
 //      for charts stamped meta.quantized (grid-snapped on purpose).
 //   3. structural sanity: lanes 0-7, notes sorted by time, unique ids,
-//      note times within [0, songLengthMs].
+//      note times within [0, songLengthMs]; hold notes (type "hold") have a
+//      finite durationMs > 0 whose tail stays within songLengthMs; and no
+//      hold's tail overlaps the next note in its own lane.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -88,9 +90,41 @@ for (const song of manifest) {
       if (note.time < 0 || note.time > chart.meta.songLengthMs)
         problems.push(`note ${note.id}: time ${note.time} outside [0, ${chart.meta.songLengthMs}]`);
       if (ids.has(note.id)) problems.push(`duplicate note id ${note.id}`);
+      if (note.type === "hold") {
+        if (!Number.isFinite(note.durationMs) || note.durationMs <= 0) {
+          problems.push(`note ${note.id}: hold durationMs must be a finite number > 0 (got ${note.durationMs})`);
+        } else if (note.time + note.durationMs > chart.meta.songLengthMs + LENGTH_TOLERANCE_MS) {
+          problems.push(
+            `note ${note.id}: hold tail ${note.time + note.durationMs} exceeds songLengthMs=${chart.meta.songLengthMs} (+${LENGTH_TOLERANCE_MS}ms tolerance)`
+          );
+        }
+      }
       ids.add(note.id);
       prevTime = note.time;
       if (problems.length > 5) break; // enough to diagnose; don't flood
+    }
+
+    // Per-lane overlap check: within each lane, sorted by time, no note's
+    // hold tail may reach the next note in that SAME lane — a hold must
+    // never swallow a later press in its own lane.
+    const byLane = new Map();
+    for (const note of chart.notes) {
+      if (!byLane.has(note.x)) byLane.set(note.x, []);
+      byLane.get(note.x).push(note);
+    }
+    outer: for (const laneNotes of byLane.values()) {
+      const sortedLaneNotes = [...laneNotes].sort((a, b) => a.time - b.time);
+      for (let i = 0; i < sortedLaneNotes.length - 1; i++) {
+        const note = sortedLaneNotes[i];
+        const next = sortedLaneNotes[i + 1];
+        const tail = note.time + (note.durationMs || 0);
+        if (tail > next.time) {
+          problems.push(
+            `note ${note.id} (lane ${note.x}): hold tail ${tail} overlaps next same-lane note ${next.id} at time ${next.time}`
+          );
+          break outer;
+        }
+      }
     }
 
     if (problems.length > 0) {
