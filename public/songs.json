@@ -77,8 +77,7 @@
     "scoreUrl": "/scores/beethoven_moonlight_1.json",
     "charts": {
       "Easy": "/charts/beethoven_moonlight_1_easy.json",
-      "Normal": "/charts/beethoven_moonlight_1.json",
-      "Hard": "/charts/beethoven_moonlight_1_hard.json"
+      "Normal": "/charts/beethoven_moonlight_1.json"
     }
   }
 ]
