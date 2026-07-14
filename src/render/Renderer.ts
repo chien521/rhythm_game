@@ -80,7 +80,7 @@ const laneCenterX = (lane: number): number => (lane + 0.5) * LANE_WIDTH;
 const NOTE_COLORS: Record<RuntimeNote["type"], string> = {
   tap: "#39f6ff",
   slide: "#ffd166",
-  hold: "#39f6ff" // Stage A: hold notes render/behave identically to taps until later gameplay/visual stages land
+  hold: "#b478ff" // violet — visually distinct from both tap (cyan) and slide (gold)
 };
 const FADE_IN_MS = 250;
 
@@ -352,6 +352,29 @@ export class Renderer {
         // Sharp bar, square-edged, spanning the lane's full width.
         this.ctx.shadowBlur = 6;
         this.ctx.fillRect(laneX + padding, cy - barHeight / 2, LANE_WIDTH - padding * 2, barHeight);
+      } else if (note.type === "hold") {
+        // Trail: a rounded-rect body from the tail up to the head, draining
+        // as the hold is consumed (bodyH shrinks toward 0), plus a solid head
+        // cap so the press point stays obvious. Brighter/more glow while
+        // actively holding, dimmer while still just pending/approaching.
+        const durationMs = note.durationMs ?? 0;
+        const tailRemaining = note.time + durationMs - songTimeMs;
+        const tailY = judgmentLineYPx - Math.max(0, tailRemaining) * noteVelocity;
+        const bodyX = laneX + padding;
+        const bodyW = LANE_WIDTH - padding * 2;
+        const bodyTop = tailY; // tail is above the head (earlier y)
+        const bodyH = Math.max(0, cy - tailY); // body drains as the hold is consumed
+        const holding = note.status === "holding";
+
+        this.ctx.globalAlpha = opacity * (holding ? 1 : 0.7);
+        this.ctx.shadowBlur = holding ? 24 : 14;
+        this.ctx.beginPath();
+        this.ctx.roundRect(bodyX, bodyTop, bodyW, bodyH, Math.min(bodyW, barHeight) / 2);
+        this.ctx.fill();
+
+        this.ctx.globalAlpha = opacity;
+        this.ctx.shadowBlur = holding ? 12 : 6;
+        this.ctx.fillRect(bodyX, cy - barHeight / 2, bodyW, barHeight);
       } else {
         // Slide: glowing rounded pill so it visually reads as "sweep-through-able".
         this.ctx.shadowBlur = 18;
