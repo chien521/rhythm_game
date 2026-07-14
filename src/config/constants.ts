@@ -140,7 +140,7 @@ export type GameState = (typeof GAME_STATES)[number];
 
 // Deterministic sort order for the DIFFICULTY_SELECT picker's rows,
 // regardless of a song's charts JSON key order.
-export const DIFFICULTY_ORDER = ["Easy", "Normal"] as const;
+export const DIFFICULTY_ORDER = ["Easy", "Normal", "Hard"] as const;
 
 // Cosmetic cross-fade when switching states. Timed off performance.now(), not
 // songTimeMs, since TITLE has no audio clock yet and RESULTS has none running.

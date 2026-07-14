@@ -18,7 +18,8 @@
     "scoreUrl": "/scores/chopin_nocturne.json",
     "charts": {
       "Easy": "/charts/chopin_nocturne_easy.json",
-      "Normal": "/charts/chopin_nocturne.json"
+      "Normal": "/charts/chopin_nocturne.json",
+      "Hard": "/charts/chopin_nocturne_hard.json"
     }
   },
   {
@@ -40,7 +41,8 @@
     "scoreUrl": "/scores/joplin_entertainer.json",
     "charts": {
       "Easy": "/charts/joplin_entertainer_easy.json",
-      "Normal": "/charts/joplin_entertainer.json"
+      "Normal": "/charts/joplin_entertainer.json",
+      "Hard": "/charts/joplin_entertainer_hard.json"
     }
   },
   {
@@ -51,7 +53,8 @@
     "scoreUrl": "/scores/mozart_rondo_alla_turca.json",
     "charts": {
       "Easy": "/charts/mozart_rondo_alla_turca_easy.json",
-      "Normal": "/charts/mozart_rondo_alla_turca.json"
+      "Normal": "/charts/mozart_rondo_alla_turca.json",
+      "Hard": "/charts/mozart_rondo_alla_turca_hard.json"
     }
   }
 ]
