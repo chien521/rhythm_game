@@ -56,5 +56,29 @@
       "Normal": "/charts/mozart_rondo_alla_turca.json",
       "Hard": "/charts/mozart_rondo_alla_turca_hard.json"
     }
+  },
+  {
+    "id": "debussy_clair_de_lune",
+    "title": "Clair de Lune",
+    "artist": "Claude Debussy",
+    "bpm": 60,
+    "scoreUrl": "/scores/debussy_clair_de_lune.json",
+    "charts": {
+      "Easy": "/charts/debussy_clair_de_lune_easy.json",
+      "Normal": "/charts/debussy_clair_de_lune.json",
+      "Hard": "/charts/debussy_clair_de_lune_hard.json"
+    }
+  },
+  {
+    "id": "beethoven_moonlight_1",
+    "title": "Moonlight Sonata (1st Mvt)",
+    "artist": "Ludwig van Beethoven",
+    "bpm": 60,
+    "scoreUrl": "/scores/beethoven_moonlight_1.json",
+    "charts": {
+      "Easy": "/charts/beethoven_moonlight_1_easy.json",
+      "Normal": "/charts/beethoven_moonlight_1.json",
+      "Hard": "/charts/beethoven_moonlight_1_hard.json"
+    }
   }
 ]

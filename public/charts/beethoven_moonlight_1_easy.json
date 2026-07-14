@@ -1,0 +1,1869 @@
+{
+  "meta": {
+    "title": "Moonlight Sonata (1st Mvt)",
+    "bpm": 60,
+    "songLengthMs": 276000
+  },
+  "notes": [
+    {
+      "id": "n1",
+      "time": 0,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n2",
+      "time": 0,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n3",
+      "time": 1333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n4",
+      "time": 2667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n5",
+      "time": 4000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n6",
+      "time": 4000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n7",
+      "time": 5333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n8",
+      "time": 6667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n9",
+      "time": 8000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n10",
+      "time": 8000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n11",
+      "time": 9333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n12",
+      "time": 10000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n13",
+      "time": 10667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n14",
+      "time": 12000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n15",
+      "time": 12000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n16",
+      "time": 13333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n17",
+      "time": 14000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n18",
+      "time": 14667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n19",
+      "time": 16000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n20",
+      "time": 17000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n21",
+      "time": 18333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n22",
+      "time": 19667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n23",
+      "time": 20000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n24",
+      "time": 21000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n25",
+      "time": 22333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n26",
+      "time": 23667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n27",
+      "time": 24000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n28",
+      "time": 25000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n29",
+      "time": 26000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n30",
+      "time": 26333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n31",
+      "time": 27667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n32",
+      "time": 28000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n33",
+      "time": 29000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n34",
+      "time": 30000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n35",
+      "time": 30333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n36",
+      "time": 31667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n37",
+      "time": 32000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n38",
+      "time": 33000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n39",
+      "time": 34333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n40",
+      "time": 35667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n41",
+      "time": 36000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n42",
+      "time": 37000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n43",
+      "time": 38333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n44",
+      "time": 39667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n45",
+      "time": 40000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 4000
+    },
+    {
+      "id": "n46",
+      "time": 41000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n47",
+      "time": 42333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n48",
+      "time": 43667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n49",
+      "time": 44000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n50",
+      "time": 45000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n51",
+      "time": 46000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n52",
+      "time": 46333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n53",
+      "time": 47333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n54",
+      "time": 48000,
+      "x": 6,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n55",
+      "time": 48667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n56",
+      "time": 50000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n57",
+      "time": 50000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n58",
+      "time": 51333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n59",
+      "time": 52000,
+      "x": 6,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n60",
+      "time": 52667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n61",
+      "time": 54000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n62",
+      "time": 54000,
+      "x": 6,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n63",
+      "time": 55333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n64",
+      "time": 56000,
+      "x": 4,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n65",
+      "time": 57333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n66",
+      "time": 58667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n67",
+      "time": 60000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n68",
+      "time": 61000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n69",
+      "time": 61333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n70",
+      "time": 62667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n71",
+      "time": 63000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n72",
+      "time": 64000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n73",
+      "time": 65333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n74",
+      "time": 66667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n75",
+      "time": 68000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n76",
+      "time": 69000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n77",
+      "time": 69333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n78",
+      "time": 70667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n79",
+      "time": 71000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n80",
+      "time": 72000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n81",
+      "time": 73333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n82",
+      "time": 74000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n83",
+      "time": 74667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n84",
+      "time": 76000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n85",
+      "time": 76000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n86",
+      "time": 77333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n87",
+      "time": 78000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n88",
+      "time": 78667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n89",
+      "time": 80000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n90",
+      "time": 80000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n91",
+      "time": 81333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n92",
+      "time": 82000,
+      "x": 6,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n93",
+      "time": 82667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n94",
+      "time": 84000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n95",
+      "time": 84000,
+      "x": 5,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n96",
+      "time": 85333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n97",
+      "time": 86000,
+      "x": 5,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n98",
+      "time": 86667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n99",
+      "time": 88000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 4000
+    },
+    {
+      "id": "n100",
+      "time": 89333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n101",
+      "time": 89667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n102",
+      "time": 91000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n103",
+      "time": 92000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n104",
+      "time": 92333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n105",
+      "time": 93667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n106",
+      "time": 95000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n107",
+      "time": 96000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n108",
+      "time": 96333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n109",
+      "time": 97667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n110",
+      "time": 98000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n111",
+      "time": 99000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n112",
+      "time": 100000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2880
+    },
+    {
+      "id": "n113",
+      "time": 100333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n114",
+      "time": 101667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n115",
+      "time": 103000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n116",
+      "time": 103000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n117",
+      "time": 104333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n118",
+      "time": 105667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n119",
+      "time": 106000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n120",
+      "time": 107000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n121",
+      "time": 108000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n122",
+      "time": 108333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n123",
+      "time": 109667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n124",
+      "time": 111000,
+      "x": 6,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n125",
+      "time": 112000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n126",
+      "time": 112333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n127",
+      "time": 113667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n128",
+      "time": 115000,
+      "x": 4,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n129",
+      "time": 116000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n130",
+      "time": 116333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n131",
+      "time": 117667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n132",
+      "time": 119000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n133",
+      "time": 120000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n134",
+      "time": 121333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n135",
+      "time": 122667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n136",
+      "time": 124000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n137",
+      "time": 125000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n138",
+      "time": 126333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n139",
+      "time": 127667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n140",
+      "time": 128000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n141",
+      "time": 129000,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n142",
+      "time": 130333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n143",
+      "time": 131667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n144",
+      "time": 132000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n145",
+      "time": 133000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n146",
+      "time": 134333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n147",
+      "time": 135667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n148",
+      "time": 136000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 11880
+    },
+    {
+      "id": "n149",
+      "time": 137000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n150",
+      "time": 138333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n151",
+      "time": 139667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n152",
+      "time": 141000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n153",
+      "time": 142333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n154",
+      "time": 143667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n155",
+      "time": 145000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n156",
+      "time": 146333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n157",
+      "time": 147667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n158",
+      "time": 148000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n159",
+      "time": 149000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n160",
+      "time": 150333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n161",
+      "time": 151667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n162",
+      "time": 152000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n163",
+      "time": 153000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n164",
+      "time": 154333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n165",
+      "time": 155667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n166",
+      "time": 156000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n167",
+      "time": 157000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n168",
+      "time": 158000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n169",
+      "time": 158333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n170",
+      "time": 159667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n171",
+      "time": 160000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n172",
+      "time": 161000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n173",
+      "time": 162000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n174",
+      "time": 162333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n175",
+      "time": 163667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n176",
+      "time": 164000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n177",
+      "time": 165000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n178",
+      "time": 166333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n179",
+      "time": 167667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n180",
+      "time": 168000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n181",
+      "time": 169000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n182",
+      "time": 170333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n183",
+      "time": 171667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n184",
+      "time": 172000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n185",
+      "time": 173000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n186",
+      "time": 174000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n187",
+      "time": 174333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n188",
+      "time": 175667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n189",
+      "time": 176000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n190",
+      "time": 177000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n191",
+      "time": 178000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n192",
+      "time": 178333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n193",
+      "time": 179667,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n194",
+      "time": 180000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n195",
+      "time": 181000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n196",
+      "time": 182333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n197",
+      "time": 183667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n198",
+      "time": 184000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 3880
+    },
+    {
+      "id": "n199",
+      "time": 185000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n200",
+      "time": 186333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n201",
+      "time": 187667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n202",
+      "time": 188000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n203",
+      "time": 189000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n204",
+      "time": 190000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n205",
+      "time": 190333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n206",
+      "time": 191667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n207",
+      "time": 192000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n208",
+      "time": 193000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n209",
+      "time": 194000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n210",
+      "time": 194333,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n211",
+      "time": 195667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n212",
+      "time": 196000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n213",
+      "time": 197000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n214",
+      "time": 198000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n215",
+      "time": 198333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n216",
+      "time": 199667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n217",
+      "time": 200000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 5000
+    },
+    {
+      "id": "n218",
+      "time": 201000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n219",
+      "time": 202333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n220",
+      "time": 203667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n221",
+      "time": 205000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n222",
+      "time": 205000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n223",
+      "time": 206333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n224",
+      "time": 207000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n225",
+      "time": 207667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n226",
+      "time": 209000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n227",
+      "time": 210333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n228",
+      "time": 211667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n229",
+      "time": 213000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n230",
+      "time": 213000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n231",
+      "time": 214333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n232",
+      "time": 215000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n233",
+      "time": 215667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n234",
+      "time": 217000,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n235",
+      "time": 218000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n236",
+      "time": 218333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n237",
+      "time": 219667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n238",
+      "time": 220000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 2880
+    },
+    {
+      "id": "n239",
+      "time": 221000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n240",
+      "time": 222333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n241",
+      "time": 223000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n242",
+      "time": 223667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n243",
+      "time": 225000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n244",
+      "time": 225000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n245",
+      "time": 226333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n246",
+      "time": 227000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n247",
+      "time": 227667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n248",
+      "time": 228333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n249",
+      "time": 229667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n250",
+      "time": 230000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n251",
+      "time": 231000,
+      "x": 0,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n252",
+      "time": 232000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n253",
+      "time": 232333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n254",
+      "time": 233667,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n255",
+      "time": 234000,
+      "x": 7,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n256",
+      "time": 235000,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n257",
+      "time": 236000,
+      "x": 5,
+      "type": "hold",
+      "durationMs": 1000
+    },
+    {
+      "id": "n258",
+      "time": 236333,
+      "x": 3,
+      "type": "tap"
+    },
+    {
+      "id": "n259",
+      "time": 237333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n260",
+      "time": 238667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n261",
+      "time": 239000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n262",
+      "time": 240000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n263",
+      "time": 241333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n264",
+      "time": 242667,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n265",
+      "time": 243000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n266",
+      "time": 244000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n267",
+      "time": 245333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n268",
+      "time": 246667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n269",
+      "time": 247000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n270",
+      "time": 248000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n271",
+      "time": 249333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n272",
+      "time": 250667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n273",
+      "time": 251000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n274",
+      "time": 252000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n275",
+      "time": 253333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n276",
+      "time": 254667,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n277",
+      "time": 255000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n278",
+      "time": 256000,
+      "x": 7,
+      "type": "tap"
+    },
+    {
+      "id": "n279",
+      "time": 257333,
+      "x": 6,
+      "type": "tap"
+    },
+    {
+      "id": "n280",
+      "time": 258667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n281",
+      "time": 259000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n282",
+      "time": 260000,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n283",
+      "time": 261333,
+      "x": 5,
+      "type": "tap"
+    },
+    {
+      "id": "n284",
+      "time": 262000,
+      "x": 3,
+      "type": "hold",
+      "durationMs": 2000
+    },
+    {
+      "id": "n285",
+      "time": 262667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n286",
+      "time": 264000,
+      "x": 2,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n287",
+      "time": 264333,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n288",
+      "time": 265667,
+      "x": 4,
+      "type": "tap"
+    },
+    {
+      "id": "n289",
+      "time": 266000,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n290",
+      "time": 267333,
+      "x": 2,
+      "type": "tap"
+    },
+    {
+      "id": "n291",
+      "time": 270000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n292",
+      "time": 270000,
+      "x": 4,
+      "type": "hold",
+      "durationMs": 1880
+    },
+    {
+      "id": "n293",
+      "time": 272000,
+      "x": 1,
+      "type": "hold",
+      "durationMs": 4000
+    },
+    {
+      "id": "n294",
+      "time": 272000,
+      "x": 4,
+      "type": "hold",
+      "durationMs": 4000
+    }
+  ]
+}
