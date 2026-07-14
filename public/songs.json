@@ -31,5 +31,27 @@
       "Easy": "/charts/bach_prelude_c_easy.json",
       "Normal": "/charts/bach_prelude_c.json"
     }
+  },
+  {
+    "id": "joplin_entertainer",
+    "title": "The Entertainer",
+    "artist": "Scott Joplin",
+    "bpm": 72,
+    "scoreUrl": "/scores/joplin_entertainer.json",
+    "charts": {
+      "Easy": "/charts/joplin_entertainer_easy.json",
+      "Normal": "/charts/joplin_entertainer.json"
+    }
+  },
+  {
+    "id": "mozart_rondo_alla_turca",
+    "title": "Rondo alla Turca",
+    "artist": "Wolfgang Amadeus Mozart",
+    "bpm": 60,
+    "scoreUrl": "/scores/mozart_rondo_alla_turca.json",
+    "charts": {
+      "Easy": "/charts/mozart_rondo_alla_turca_easy.json",
+      "Normal": "/charts/mozart_rondo_alla_turca.json"
+    }
   }
 ]
