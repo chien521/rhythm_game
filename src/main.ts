@@ -626,7 +626,7 @@ window.addEventListener("keydown", (e) => {
     e.preventDefault();
     audioOffsetMs = Math.min(AUDIO_OFFSET_MAX_MS, Math.max(AUDIO_OFFSET_MIN_MS, audioOffsetMs + AUDIO_OFFSET_STEP_MS));
     setAudioOffsetMs(audioOffsetMs);
-  } else if (e.code === "Escape") {
+  } else if (e.code === "Escape" || e.code === "KeyS") {
     e.preventDefault();
     audioManager.stopMetronome();
     setState(settingsReturnState);
