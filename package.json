@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chien521/rhythm_game"
+  },
+  "homepage": "https://chien521.github.io/rhythm_game/",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

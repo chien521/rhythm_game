@@ -135,14 +135,27 @@ function clientToNormalized(clientX: number, clientY: number): { x: number; y: n
   };
 }
 
+// Resolves a root-absolute asset path (e.g. "/songs.json", a chart/score path
+// straight out of songs.json) against the app's actual deployed base path.
+// A hardcoded leading "/" only ever works when the app is served from a
+// domain's root (localhost, a GitHub Pages USER page, VIVERSE's bundle root).
+// It silently 404s on a GitHub Pages PROJECT page (e.g.
+// https://<user>.github.io/<repo>/), where "/songs.json" resolves to the
+// domain root instead of the repo subpath. import.meta.env.BASE_URL is Vite's
+// own resolved base (from vite.config.ts's `base`), so this keeps every fetch
+// correct regardless of what subpath the app is deployed under.
+function resolveAssetUrl(path: string): string {
+  return import.meta.env.BASE_URL + path.replace(/^\//, "");
+}
+
 async function loadChart(url: string): Promise<ChartData> {
-  const res = await fetch(url);
+  const res = await fetch(resolveAssetUrl(url));
   if (!res.ok) throw new Error(`Failed to load chart: ${url} (${res.status})`);
   return res.json();
 }
 
 async function loadSongManifest(url: string): Promise<SongManifest> {
-  const res = await fetch(url);
+  const res = await fetch(resolveAssetUrl(url));
   if (!res.ok) throw new Error(`Failed to load song manifest: ${url} (${res.status})`);
   return res.json();
 }
@@ -199,7 +212,7 @@ async function loadAndPlaySong(song: SongManifestEntry, difficulty: string): Pro
 
   loadingSelectedSong = true;
   try {
-    const [chart] = await Promise.all([loadChart(chartPath), audioManager.loadScore(song.scoreUrl)]);
+    const [chart] = await Promise.all([loadChart(chartPath), audioManager.loadScore(resolveAssetUrl(song.scoreUrl))]);
     chartData = chart;
     activeSongId = song.id; // only set once the load actually succeeded, so a failure never leaves stale identity pointing at an unloaded song
     activeDifficulty = difficulty;
@@ -301,7 +314,7 @@ async function enterRecordingMode(): Promise<void> {
 
   loadingSelectedSong = true;
   try {
-    await audioManager.loadScore(song.scoreUrl);
+    await audioManager.loadScore(resolveAssetUrl(song.scoreUrl));
     recordingSongId = song.id;
     recordedNotes = [];
     keyFlashes = [];
