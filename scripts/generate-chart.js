@@ -116,24 +116,9 @@ if (quantize !== "off" && !(quantize in QUANTIZE_DIVISORS)) {
 const score = JSON.parse(readFileSync(scorePath, "utf8"));
 const songDurationSec = score.meta.durationMs / 1000;
 
-// Lane assignment from the FULL score's per-hand pitch ranges (stable across
-// any filter settings below).
-const handRanges = {};
-for (const hand of ["L", "R"]) {
-  const pitches = score.notes.filter((n) => n.hand === hand).map((n) => n.midi);
-  if (pitches.length > 0) {
-    const min = Math.min(...pitches);
-    const max = Math.max(...pitches);
-    handRanges[hand] = { min, range: max - min || 1 };
-  }
-}
-
-function noteToLane(note) {
-  const base = HAND_LANE_BASE[note.hand];
-  const range = handRanges[note.hand];
-  const idx = Math.floor(((note.midi - range.min) / range.range) * LANES_PER_HAND);
-  return base + Math.min(LANES_PER_HAND - 1, Math.max(0, idx));
-}
+// Lane assignment is deferred until after thinning (see laneBoundsFor/
+// noteToLane below, computed from `working`) — pitch quantiles among the
+// FINAL KEPT notes, not a linear scaling of the full score's range.
 
 function density(notes) {
   return notes.length / songDurationSec;
@@ -256,6 +241,33 @@ console.log(
 if (reportOnly) {
   console.log("\n--report-only set: chart file not written.");
   process.exit(0);
+}
+
+// Lane assignment by pitch QUANTILE among the FINAL KEPT notes (post-
+// thinning), per hand, so each of a hand's 4 lanes gets roughly a quarter of
+// that hand's notes — this guarantees all lanes get used regardless of pitch
+// outliers (e.g. ragtime's low stride bass) or which pitches thinning
+// happened to keep, while still preserving contour (higher pitch -> higher-
+// or-equal lane). Note: since this is computed from `working` rather than the
+// full score, lane assignment can shift if thinning settings change — an
+// accepted trade for balanced lane usage. Perfect 25/25/25/25 balance isn't
+// required; heavy pitch ties can leave a lane light, which is fine.
+function laneBoundsFor(hand) {
+  const pitches = working
+    .filter((n) => n.hand === hand)
+    .map((n) => n.midi)
+    .sort((a, b) => a - b);
+  if (pitches.length === 0) return [Infinity, Infinity, Infinity];
+  const q = (f) => pitches[Math.floor(pitches.length * f)];
+  return [q(0.25), q(0.5), q(0.75)];
+}
+const laneBounds = { L: laneBoundsFor("L"), R: laneBoundsFor("R") };
+
+function noteToLane(note) {
+  const base = HAND_LANE_BASE[note.hand]; // L -> 0, R -> 4 (unchanged)
+  const [q1, q2, q3] = laneBounds[note.hand];
+  const within = (note.midi > q1 ? 1 : 0) + (note.midi > q2 ? 1 : 0) + (note.midi > q3 ? 1 : 0);
+  return base + within; // base .. base+3
 }
 
 const notes = working
