@@ -496,7 +496,7 @@ export class Renderer {
     const { x, y, width, height } = PROGRESS_BAR_RECT;
     const progress = durationMs > 0 ? clamp(songTimeMs / durationMs, 0, 1) : 0;
     const fillWidth = width * progress;
-    const activeColor = "#39f6ff";
+    const activeColor = "#ff9f45";
     const trackColor = "rgba(255, 255, 255, 0.15)";
 
     this.ctx.save();
@@ -535,7 +535,7 @@ export class Renderer {
 
     this.ctx.textBaseline = "alphabetic";
     this.ctx.font = "16px monospace";
-    this.ctx.fillStyle = "#8fe3ff";
+    this.ctx.fillStyle = "#ffd0a0";
     this.ctx.fillText(`${formatTime(songTimeMs)} / ${formatTime(durationMs)}`, textX, y - 10);
 
     if (!isPlaying) {
